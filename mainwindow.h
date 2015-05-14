@@ -3,9 +3,12 @@
 
 #include "monitorwidget.h"
 #include "statuswidget.h"
+#include "game.h"
+#include "widgets.h"
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QTimer>
+
 
 class MainWindow : public QMainWindow
 {
@@ -18,7 +21,10 @@ public:
     CMonitorWidget *monitorWidget;
     CStatusPrinter *printer;
     CStatusWidget *statusWidget;
+    CTabDockWidget *tabWidget;
+    CLoadPlayersWidget *loadWidget;
     QTimer* statusUpdateTimer;
+    CGame* game;
 };
 
 #endif // MAINWINDOW_H
