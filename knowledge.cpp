@@ -4,7 +4,8 @@ CKnowledge *knowledge;
 
 CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(parent)
 {
-    map = new CMap(27,60, 30,300,900);
+//    map = new CMap(27,60, 30,300,900);
+    map = new CMap(9,30, 9,27,300);
 
     printer = _printer;
 

@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     terminatorrobot.cpp \
     predatorrobot.cpp \
     knowledge.cpp \
-    statuswidget.cpp
+    statuswidget.cpp \
+    game.cpp
 
 HEADERS  += mainwindow.h \
     monitorwidget.h \
@@ -37,4 +38,9 @@ HEADERS  += mainwindow.h \
     predatorrobot.h \
     knowledge.h \
     robots.h \
-    statuswidget.h
+    statuswidget.h \
+    game.h
+
+INCLUDEPATH += $$PWD
+OBJECTS_DIR=$$PWD
+DESTDIR=$$PWD

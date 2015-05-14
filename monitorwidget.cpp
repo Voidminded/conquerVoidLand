@@ -9,7 +9,7 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     connect(testTimer, SIGNAL(timeout()),this, SLOT(testfunction()));
 
     this->setFocusPolicy(Qt::ClickFocus);
-    this->setMouseTracking(true);
+//    this->setMouseTracking(true);
 //    this->setWindowState(Qt::WindowFullScreen);
     this->setFixedSize(690,390);
     mainTimer = new QTimer();
