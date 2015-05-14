@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     ninjarobot.cpp \
     terminatorrobot.cpp \
     predatorrobot.cpp \
-    knowledge.cpp
+    knowledge.cpp \
+    statuswidget.cpp
 
 HEADERS  += mainwindow.h \
     monitorwidget.h \
@@ -35,4 +36,5 @@ HEADERS  += mainwindow.h \
     terminatorrobot.h \
     predatorrobot.h \
     knowledge.h \
-    robots.h
+    robots.h \
+    statuswidget.h

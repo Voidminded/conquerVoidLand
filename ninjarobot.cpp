@@ -45,3 +45,7 @@ QPixmap CNinjaRobot::draw(int color, int dir)
     painter.drawPixmap(0,0,tempOutput);
     return output.scaled(300,300);
 }
+ int CNinjaRobot::hit()
+ {
+     return power;
+ }

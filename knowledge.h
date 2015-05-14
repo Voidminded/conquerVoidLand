@@ -4,6 +4,7 @@
 #include "base.h"
 #include "map.h"
 #include "robots.h"
+#include "statuswidget.h"
 #include <QObject>
 
 //union Robots{
@@ -27,14 +28,18 @@ class CKnowledge : public QObject
 {
     Q_OBJECT
 public:
-    explicit CKnowledge(QObject *parent = 0);
+    explicit CKnowledge(CStatusPrinter *_printer, QObject *parent = 0);
     ~CKnowledge();
 
+    inline QPixmap getRobotsPic(int team, int model, int direction){return robotsPics[team][model][direction];}
+    void debug(QString text, QColor color = QColor(0,0,0));
     CMap *map;
 //    QList<Robots> robots;
     team teams[4];
-    inline QPixmap getRobotsPic(int team, int model, int direction){return robotsPics[team][model][direction];}
     PropertyGet(QPixmap***, RobotsPics, robotsPics);//Usage [Team][Robot][Direction]
+
+private:
+    CStatusPrinter *printer;
 signals:
 
 public slots:

@@ -10,8 +10,8 @@ public:
     ~CPredatorRobot();
     //Functions :
     static QPixmap draw(int color, int dir);
-    static void loadGraphics();
-
+//    static void loadGraphics();
+    int hit();
 private:
 signals:
 

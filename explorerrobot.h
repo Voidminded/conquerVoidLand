@@ -11,7 +11,7 @@ public:
     //Functions :
     static QPixmap draw(int color, int dir);
 //    static void loadGraphics();
-
+    int hit();
 private:
 signals:
 

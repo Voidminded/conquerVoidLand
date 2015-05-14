@@ -2,9 +2,11 @@
 
 CKnowledge *knowledge;
 
-CKnowledge::CKnowledge(QObject *parent) : QObject(parent)
+CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(parent)
 {
     map = new CMap(27,60, 30,300,900);
+
+    printer = _printer;
 
     //Generating robots images :
     robotsPics = new QPixmap**[4];
@@ -38,3 +40,7 @@ CKnowledge::~CKnowledge()
 
 }
 
+void CKnowledge::debug(QString text, QColor color)
+{
+    printer->textBuffer.enqueue(CStatusText(text,color));
+}

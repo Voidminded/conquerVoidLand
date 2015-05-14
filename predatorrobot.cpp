@@ -46,3 +46,8 @@ QPixmap CPredatorRobot::draw(int color, int dir)
     p.drawPixmap(0,0,output.transformed(t));
     return tempOutput.copy(abs(sin(dir*(360/6)*_DEG2RAD)*40),abs(cos(dir*(360/6)*_DEG2RAD)*40),450-abs(sin(dir*(360/6)*_DEG2RAD)*40),450-abs(cos(dir*(360/6)*_DEG2RAD)*40)).scaled(360, 360);
 }
+
+int CPredatorRobot::hit()
+{
+    return power;
+}

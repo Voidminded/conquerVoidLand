@@ -8,8 +8,10 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     testTimer->start();
     connect(testTimer, SIGNAL(timeout()),this, SLOT(testfunction()));
 
-    //    this->setWindowState(Qt::WindowFullScreen);
-    this->setFixedSize(900,600);
+    this->setFocusPolicy(Qt::ClickFocus);
+    this->setMouseTracking(true);
+//    this->setWindowState(Qt::WindowFullScreen);
+    this->setFixedSize(690,390);
     mainTimer = new QTimer();
     mainTimer->setInterval(30);
     mainTimer->start();
@@ -464,6 +466,7 @@ void CMonitorWidget::testfunction()
         break;
     }
     }
+    knowledge->debug(QString("Add %1 robot to team %2 ").arg(r).arg(t), Qt::darkCyan);
 }
 
 void CMonitorWidget::drawRobot(QPainter *painter, int team, int robot, int model)
