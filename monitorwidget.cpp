@@ -2,10 +2,11 @@
 
 CMonitorWidget::CMonitorWidget(QWidget *parent)
 {
+    this->setParent(parent);
     // For test :
     testTimer = new QTimer();
     testTimer->setInterval(1000);
-    testTimer->start();
+//    testTimer->start();
     connect(testTimer, SIGNAL(timeout()),this, SLOT(testfunction()));
 
     this->setFocusPolicy(Qt::ClickFocus);
@@ -101,6 +102,9 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     cellMine[Rhodium][6] = QPixmap("./images/hex/rhodium6");
 
     generateBots();
+
+    for(int i = 0; i < knowledge->map->links.count(); i++)
+        knowledge->debug(QString("Link : %1 -> %2").arg(knowledge->map->links.at(i).first).arg(knowledge->map->links.at(i).second), Qt::blue);
 }
 
 CMonitorWidget::~CMonitorWidget()
@@ -306,7 +310,7 @@ void CMonitorWidget::paintEvent(QPaintEvent */*event*/)
         painter.scale(0.6,0.6);
         painter.setOpacity(0.3);
         painter.drawPixmap(0,0,QPixmap("./images/planet.jpg"));
-        mapGenerator(&painter);
+//        mapGenerator(&painter);
         return;
     }
     painter.drawPixmap(0,0,QPixmap("./images/background.jpg"));
@@ -323,8 +327,8 @@ void CMonitorWidget::drawScene(QPainter *painter)
 {
     //    painter->translate(p.getXOffset(), p.getYOffset());
     painter->setRenderHint(QPainter::Antialiasing);
-    int height = cell.height()-8;
-    int width = cell.width()-8;
+//    int height = cell.height()-8;
+//    int width = cell.width()-8;
     for(int i = 0; i < 4; i++)
     {
         for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
@@ -394,16 +398,9 @@ void CMonitorWidget::drawMap(QPainter *painter)
                     painter->drawPixmap(i*(width-100),(i%2?1:-1)*height/4+j*height,cellOwner[knowledge->map->cells[knowledge->map->getIndex()[i][j]].owner]);
                 painter->drawPixmap(i*(width-100),(i%2?1:-1)*height/4+j*height,cellMine[knowledge->map->cells[knowledge->map->getIndex()[i][j]].mineType][knowledge->map->cells[knowledge->map->getIndex()[i][j]].value]);
                 painter->drawText(i*(width-100)+123,(i%2?1:-1)*height/4+j*height+96,QString::number(knowledge->map->getIndex()[i][j]));
+//                painter->drawText(i*(width-100)+223,(i%2?1:-1)*height/4+j*height+96,QString("%1 %2").arg(i).arg(j));
             }
         }
-}
-
-void CMonitorWidget::mapGenerator(QPainter *painter)
-{
-    int row = 10;
-    int col = 10;
-    //    double zoom = 0.5
-
 }
 
 void CMonitorWidget::generateBots()

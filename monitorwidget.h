@@ -55,7 +55,6 @@ private:
     QPixmap drawBot2(int color, int dir);
     QPixmap drawBot3(int color, int dir);
     QPixmap drawBot4(int color, int dir);
-    void mapGenerator(QPainter* painter);
     void drawRobot(QPainter* painter, int team, int robot, int model);
     //For test:
     QPixmap bb[96];

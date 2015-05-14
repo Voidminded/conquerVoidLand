@@ -11,6 +11,10 @@ CMap::CMap(int _h, int _w, int _rad, int _plot, int _gold)
     index = new int*[width];
     for(int i = 0; i <width; i++)
         index[i] = new int[height];
+    reversePos.clear();
+    cells.clear();
+    activeCells.clear();
+    forwardPos.clear();
     for(int i = 0; i <width; i++)
         for(int j = 0; j < height; j++)
         {
@@ -22,9 +26,38 @@ CMap::CMap(int _h, int _w, int _rad, int _plot, int _gold)
                 cells[numberOfCells].mineType = Neutral;
                 cells[numberOfCells].value = 0;
                 reversePos[numberOfCells] = QPair<int,int>(i,j);
+                forwardPos[QPair<int,int>(i,j)] = numberOfCells;
+                activeCells.append(QPair<int,int>(i,j));
                 numberOfCells++;
             }
         }
+    links.clear();
+    {
+        QSet< QPair<int, int> > mySet;
+        mySet.clear();
+        for(QMap<int, QPair<int, int> >::iterator it = reversePos.begin(); it!=reversePos.end(); ++it)
+        {
+            if(activeCells.contains(QPair<int, int>(it->first+1, it->second)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first+1,it->second)]));
+            if(it->first%2 && activeCells.contains(QPair<int, int>(it->first+1, it->second+1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first+1,it->second+1)]));
+            if(!it->first%2 && activeCells.contains(QPair<int, int>(it->first+1, it->second-1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first+1,it->second-1)]));
+            if(activeCells.contains(QPair<int, int>(it->first, it->second+1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first,it->second+1)]));
+            if(activeCells.contains(QPair<int, int>(it->first, it->second-1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first,it->second-1)]));
+            if(activeCells.contains(QPair<int, int>(it->first-1, it->second)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first-1,it->second)]));
+            if(it->first%2 && activeCells.contains(QPair<int, int>(it->first-1, it->second+1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first-1,it->second+1)]));
+            if(!it->first%2 && activeCells.contains(QPair<int, int>(it->first-1, it->second-1)))
+                mySet.insert(QPair<int, int>(it.key(), forwardPos[QPair<int,int>(it->first-1,it->second-1)]));
+        }
+        for(QSet< QPair<int, int> >::iterator it = mySet.begin(); it != mySet.end(); ++it)
+            if(!links.contains(QPair<int, int>(it->second, it->first)))
+                links.append(*it);
+    }
     while(_rad)
     {
         int selected = rand()%(height*width);

@@ -6,9 +6,12 @@ CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(pare
 {
 //    map = new CMap(27,60, 30,300,900);
     map = new CMap(9,30, 9,27,300);
+//    map = new CMap(4,5, 0,0,0);
 
     printer = _printer;
 
+//    for(int i = 0; i < map->activeCells.count(); i++)
+//        debug(QString("Active : %1 %2").arg(map->activeCells.at(i).first).arg(map->activeCells.at(i).second), Qt::magenta);
     //Generating robots images :
     robotsPics = new QPixmap**[4];
     for(int i = 0; i < 4; i++)

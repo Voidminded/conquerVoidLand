@@ -19,12 +19,14 @@ public:
     QList<QPair<int, int> > links;
     QMap<int, cell> cells;
     QMap<int, QPair<int, int> > reversePos;
+    QMap<QPair<int, int>, int> forwardPos;
     PropertyGet(int, Width, width);
     PropertyGet(int, Height, height);
     PropertyGet(int**, Map, map);
     PropertyGet(int**, Index, index);
     PropertyGet(int, NumberOfCells, numberOfCells);
 private:
+    QList<QPair<int, int> > activeCells;
 
 };
 
