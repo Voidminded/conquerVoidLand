@@ -49,3 +49,69 @@ void CKnowledge::debug(QString text, QColor color)
 {
     printer->textBuffer.enqueue(CStatusText(text,color));
 }
+
+bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
+{
+    CTerminatorRobot t;
+    CExplorerRobot e;
+    CNinjaRobot n;
+    CPredatorRobot p;
+    price removeP;
+    if(model == Explorer)
+    {
+        removeP.gold = e.getPrice().gold*num;
+        removeP.platinum = e.getPrice().platinum*num;
+        removeP.rhodium = e.getPrice().rhodium*num;
+        if(!(teams[id].gold <= e.getPrice().gold*num)
+                || !(teams[id].platinum <= e.getPrice().platinum*num)
+                || !(teams[id].rhodium <= e.getPrice().rhodium*num))
+            error = "Insufficient budget";
+        if(map->cells[pos].owner != id)
+            error = "Invalid position";
+    }
+    else if(model == Terminator)
+    {
+        removeP.gold = t.getPrice().gold*num;
+        removeP.platinum = t.getPrice().platinum*num;
+        removeP.rhodium = t.getPrice().rhodium*num;
+        if(!(teams[id].gold <= t.getPrice().gold*num)
+                || !(teams[id].platinum <= t.getPrice().platinum*num)
+                || !(teams[id].rhodium <= t.getPrice().rhodium*num))
+            error = "Insufficient budget";
+        if(map->cells[pos].owner != id)
+            error = "Invalid position";
+    }
+    else if(model == Ninja)
+    {
+        removeP.gold = n.getPrice().gold*num;
+        removeP.platinum = n.getPrice().platinum*num;
+        removeP.rhodium = n.getPrice().rhodium*num;
+        if(!(teams[id].gold <= n.getPrice().gold*num)
+                || !(teams[id].platinum <= n.getPrice().platinum*num)
+                || !(teams[id].rhodium <= n.getPrice().rhodium*num))
+            error = "Insufficient budget";
+        if(map->cells[pos].owner != id)
+            error = "Invalid position";
+    }
+    else if(model == Predator)
+    {
+        removeP.gold = p.getPrice().gold*num;
+        removeP.platinum = p.getPrice().platinum*num;
+        removeP.rhodium = p.getPrice().rhodium*num;
+        if(!(teams[id].gold <= p.getPrice().gold*num)
+                || !(teams[id].platinum <= p.getPrice().platinum*num)
+                || !(teams[id].rhodium <= p.getPrice().rhodium*num))
+            error = "Insufficient budget";
+        if(map->cells[pos].owner != id)
+            error = "Invalid position";
+    }
+    if(error.isEmpty())
+    {
+        teams[id].gold -= removeP.gold;
+        teams[id].platinum -= removeP.platinum;
+        teams[id].rhodium -= removeP.rhodium;
+        return true;
+    }
+    else
+        return false;
+}

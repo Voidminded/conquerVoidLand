@@ -9,7 +9,9 @@ CRobot::CRobot(QObject *parent) : QObject(parent)
     yOffset=5;//(rand()%15);
     xAdder = 0.3;
     yAdder = -0.6;
-
+    pr.gold = 0;
+    pr.rhodium = 0;
+    pr.platinum = 0;
     shiftTimer = new QTimer();
     shiftTimer->setInterval(_RATE);
     shiftTimer->start();

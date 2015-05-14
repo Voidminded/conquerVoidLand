@@ -6,6 +6,9 @@
 #include <QProcess>
 #include <QObject>
 #include <QTimer>
+#include <iostream>
+#include <string>
+#include <sstream>
 
 class CGame : public QObject
 {
@@ -23,6 +26,7 @@ private:
     QTimer *player3Time;
     QTimer *player4Time;
     bool inited1;
+    void addRobot( int team, int numbers, char model, int pos);
 private slots:
     void read();
     void write();

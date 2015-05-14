@@ -152,7 +152,7 @@ void CGame::sendPlayer1()
     if(p1->state() == QProcess::Running)
     {
         p1->write(QString("%1 %2 %3\n")
-                  .arg(knowledge->teams[id].rhadium)
+                  .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
@@ -221,7 +221,7 @@ void CGame::sendPlayer2()
     if(p1->state() == QProcess::Running)
     {
         p1->write(QString("%1 %2 %3\n")
-                  .arg(knowledge->teams[id].rhadium)
+                  .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
@@ -290,7 +290,7 @@ void CGame::sendPlayer3()
     if(p1->state() == QProcess::Running)
     {
         p1->write(QString("%1 %2 %3\n")
-                  .arg(knowledge->teams[id].rhadium)
+                  .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
@@ -359,7 +359,7 @@ void CGame::sendPlayer4()
     if(p1->state() == QProcess::Running)
     {
         p1->write(QString("%1 %2 %3\n")
-                  .arg(knowledge->teams[id].rhadium)
+                  .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
@@ -391,20 +391,106 @@ void CGame::sendPlayer4()
     }
 }
 
+void CGame::addRobot(int team, int numbers, char model, int pos)
+{
+    switch(model)
+    {
+    case 'E':
+    {
+        for(int i = 0; i < numbers; i++)
+        {
+            CExplorerRobot* temp = new CExplorerRobot;
+            temp->setDirection(rand()%6);
+            temp->setPosition(pos);
+            knowledge->teams[team].explorers.append(temp);
+        }
+        break;
+    }
+    case 'N':
+    {
+        for(int i = 0; i < numbers; i++)
+        {
+            CNinjaRobot* tt = new CNinjaRobot;
+            tt->setDirection(rand()%6);
+            tt->setPosition(pos);
+            knowledge->teams[team].ninjas.append(tt);
+        }
+        break;
+    }
+    case 'T':
+    {
+        for(int i = 0; i < numbers; i++)
+        {
+            CTerminatorRobot* ttt = new CTerminatorRobot;
+            ttt->setDirection(rand()%6);
+            ttt->setPosition(pos);
+            knowledge->teams[team].terminators.append(ttt);
+        }
+        break;
+    }
+    case 'P':
+    {
+        for(int i = 0; i < numbers; i++)
+        {
+            CPredatorRobot* tttt = new CPredatorRobot;
+            tttt->setDirection(rand()%6);
+            tttt->setPosition(pos);
+            knowledge->teams[team].predators.append(tttt);
+        }
+        break;
+    }
+    }
+}
+
 void CGame::receivePlayer1()
 {
-    knowledge->debug(p1->readAllStandardError(),Qt::red);
+    int id = 0;
+    QString errors = p1->readAllStandardError();
+    if(!errors.isEmpty())
+        knowledge->debug(errors,Qt::red);
     QString movment = p1->readLine();
     QString purchase = p1->readLine();
     QString rest = p1->readAllStandardOutput();
-    knowledge->debug(movment,Qt::darkBlue);
-    knowledge->debug(purchase,Qt::darkYellow);
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::darkRed);
+            }
+        }
+    }
+    movment.prepend("Player 1 Moves : ");
+    purchase.prepend("Player 1 purchases : ");
+    knowledge->debug(movment,Qt::darkMagenta);
+    knowledge->debug(purchase,Qt::magenta);
     if(!rest.isEmpty())
         knowledge->debug(rest,Qt::darkRed);
 }
 
 void CGame::receivePlayer2()
 {
-//    knowledge->debug(p1->readAllStandardError(),Qt::red);
-//    knowledge->debug(p1->readAllStandardOutput(),Qt::green);
+    //    knowledge->debug(p1->readAllStandardError(),Qt::red);
+    //    knowledge->debug(p1->readAllStandardOutput(),Qt::green);
 }

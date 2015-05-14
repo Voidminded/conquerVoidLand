@@ -22,7 +22,7 @@ public:
     QList<CNinjaRobot*> ninjas;
     QList<CTerminatorRobot*> terminators;
     QList<CPredatorRobot*> predators;
-    int rhadium = 0;
+    int rhodium = 0;
     int platinum = 0;
     int gold = 0;
 };
@@ -34,8 +34,10 @@ public:
     explicit CKnowledge(CStatusPrinter *_printer, QObject *parent = 0);
     ~CKnowledge();
 
-    inline QPixmap getRobotsPic(int team, int model, int direction){return robotsPics[team][model][direction];}
+    inline QPixmap getRobotsPic(int id, int model, int direction){return robotsPics[id][model][direction];}
     void debug(QString text, QColor color = QColor(0,0,0));
+    bool canBuy(int id, int num, int model, int pos, QString &error);
+    QMap< int, price> robotsPrice;
     CMap *map;
 //    QList<Robots> robots;
     team teams[4];

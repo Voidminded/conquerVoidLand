@@ -9,6 +9,12 @@
 #include <QObject>
 #include <QPixmap>
 
+struct price{
+    int rhodium;
+    int platinum;
+    int gold;
+};
+
 class CRobot: public QObject
 {
     Q_OBJECT
@@ -34,6 +40,7 @@ private:
     Property(int, HitPoint, hp);
     Property(int, Power, power);
     PropertyGet(int, Model, model);
+    PropertyGet(price, Price, pr);
     PropertyGet(float, XOffset, xOffset);
     PropertyGet(float, YOffset, yOffset);
 private slots:
