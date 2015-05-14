@@ -37,6 +37,7 @@ public:
     inline QPixmap getRobotsPic(int id, int model, int direction){return robotsPics[id][model][direction];}
     void debug(QString text, QColor color = QColor(0,0,0));
     bool canBuy(int id, int num, int model, int pos, QString &error);
+    bool canGo(int id, int num, int model, int from, int to, QString &error);
     QMap< int, price> robotsPrice;
     CMap *map;
 //    QList<Robots> robots;

@@ -8,8 +8,17 @@ CGame::CGame(QObject *parent)  : QObject(parent)
 
     p1 = new QProcess(this);
     p1->setProcessChannelMode(QProcess::SeparateChannels);
+    p2 = new QProcess(this);
+    p2->setProcessChannelMode(QProcess::SeparateChannels);
+    p3 = new QProcess(this);
+    p3->setProcessChannelMode(QProcess::SeparateChannels);
+    p4 = new QProcess(this);
+    p4->setProcessChannelMode(QProcess::SeparateChannels);
+
     connect(p1,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer1()));
-    //    p1->start("./player1.out", QProcess::ReadWrite);
+    connect(p2,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer2()));
+    connect(p3,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer3()));
+    connect(p4,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer4()));
 
     testTimer = new QTimer();
     testTimer->setInterval(500);
@@ -190,45 +199,45 @@ void CGame::sendPlayer2()
     if(!inited1)
     {
         inited1 = true;
-        if(p1->state() == QProcess::Running)
+        if(p2->state() == QProcess::Running)
         {
-            p1->write(QString("%1 %2 %3 %4\n")
+            p2->write(QString("%1 %2 %3 %4\n")
                       .arg(knowledge->getActiveTeams())
                       .arg(id)
                       .arg(knowledge->map->getNumberOfCells())
                       .arg(knowledge->map->links.count())
                       .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p2->waitForBytesWritten();
             for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
             {
-                p1->write(QString("%1 %2 %3\n")
+                p2->write(QString("%1 %2 %3\n")
                           .arg(it.key())
                           .arg(it->mineType)
                           .arg(it->value)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p2->waitForBytesWritten();
             }
             for(int i = 0; i < knowledge->map->links.count(); i++)
             {
-                p1->write(QString("%1 %2\n")
+                p2->write(QString("%1 %2\n")
                           .arg(knowledge->map->links.at(i).first)
                           .arg(knowledge->map->links.at(i).second)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p2->waitForBytesWritten();
             }
         }
     }
-    if(p1->state() == QProcess::Running)
+    if(p2->state() == QProcess::Running)
     {
-        p1->write(QString("%1 %2 %3\n")
+        p2->write(QString("%1 %2 %3\n")
                   .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
-        p1->waitForBytesWritten();
+        p2->waitForBytesWritten();
         for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
         {
-            p1->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
+            p2->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
                       .arg(it.key())
                       .arg(it->owner)
                       .arg(it->robots[0][Explorer])
@@ -248,7 +257,7 @@ void CGame::sendPlayer2()
                     .arg(it->robots[3][Terminator])
                     .arg(it->robots[3][Predator])
                     .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p2->waitForBytesWritten();
         }
     }
 }
@@ -259,45 +268,45 @@ void CGame::sendPlayer3()
     if(!inited1)
     {
         inited1 = true;
-        if(p1->state() == QProcess::Running)
+        if(p3->state() == QProcess::Running)
         {
-            p1->write(QString("%1 %2 %3 %4\n")
+            p3->write(QString("%1 %2 %3 %4\n")
                       .arg(knowledge->getActiveTeams())
                       .arg(id)
                       .arg(knowledge->map->getNumberOfCells())
                       .arg(knowledge->map->links.count())
                       .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p3->waitForBytesWritten();
             for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
             {
-                p1->write(QString("%1 %2 %3\n")
+                p3->write(QString("%1 %2 %3\n")
                           .arg(it.key())
                           .arg(it->mineType)
                           .arg(it->value)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p3->waitForBytesWritten();
             }
             for(int i = 0; i < knowledge->map->links.count(); i++)
             {
-                p1->write(QString("%1 %2\n")
+                p3->write(QString("%1 %2\n")
                           .arg(knowledge->map->links.at(i).first)
                           .arg(knowledge->map->links.at(i).second)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p3->waitForBytesWritten();
             }
         }
     }
-    if(p1->state() == QProcess::Running)
+    if(p3->state() == QProcess::Running)
     {
-        p1->write(QString("%1 %2 %3\n")
+        p3->write(QString("%1 %2 %3\n")
                   .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
-        p1->waitForBytesWritten();
+        p3->waitForBytesWritten();
         for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
         {
-            p1->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
+            p3->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
                       .arg(it.key())
                       .arg(it->owner)
                       .arg(it->robots[0][Explorer])
@@ -317,7 +326,7 @@ void CGame::sendPlayer3()
                     .arg(it->robots[3][Terminator])
                     .arg(it->robots[3][Predator])
                     .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p3->waitForBytesWritten();
         }
     }
 }
@@ -328,45 +337,45 @@ void CGame::sendPlayer4()
     if(!inited1)
     {
         inited1 = true;
-        if(p1->state() == QProcess::Running)
+        if(p4->state() == QProcess::Running)
         {
-            p1->write(QString("%1 %2 %3 %4\n")
+            p4->write(QString("%1 %2 %3 %4\n")
                       .arg(knowledge->getActiveTeams())
                       .arg(id)
                       .arg(knowledge->map->getNumberOfCells())
                       .arg(knowledge->map->links.count())
                       .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p4->waitForBytesWritten();
             for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
             {
-                p1->write(QString("%1 %2 %3\n")
+                p4->write(QString("%1 %2 %3\n")
                           .arg(it.key())
                           .arg(it->mineType)
                           .arg(it->value)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p4->waitForBytesWritten();
             }
             for(int i = 0; i < knowledge->map->links.count(); i++)
             {
-                p1->write(QString("%1 %2\n")
+                p4->write(QString("%1 %2\n")
                           .arg(knowledge->map->links.at(i).first)
                           .arg(knowledge->map->links.at(i).second)
                           .toStdString().c_str());
-                p1->waitForBytesWritten();
+                p4->waitForBytesWritten();
             }
         }
     }
-    if(p1->state() == QProcess::Running)
+    if(p4->state() == QProcess::Running)
     {
-        p1->write(QString("%1 %2 %3\n")
+        p4->write(QString("%1 %2 %3\n")
                   .arg(knowledge->teams[id].rhodium)
                   .arg(knowledge->teams[id].platinum)
                   .arg(knowledge->teams[id].gold)
                   .toStdString().c_str());
-        p1->waitForBytesWritten();
+        p4->waitForBytesWritten();
         for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
         {
-            p1->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
+            p4->write(QString("%1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18\n")
                       .arg(it.key())
                       .arg(it->owner)
                       .arg(it->robots[0][Explorer])
@@ -386,7 +395,7 @@ void CGame::sendPlayer4()
                     .arg(it->robots[3][Terminator])
                     .arg(it->robots[3][Predator])
                     .toStdString().c_str());
-            p1->waitForBytesWritten();
+            p4->waitForBytesWritten();
         }
     }
 }
@@ -403,6 +412,7 @@ void CGame::addRobot(int team, int numbers, char model, int pos)
             temp->setDirection(rand()%6);
             temp->setPosition(pos);
             knowledge->teams[team].explorers.append(temp);
+            knowledge->map->cells[pos].robots[team][Explorer]++;
         }
         break;
     }
@@ -414,6 +424,7 @@ void CGame::addRobot(int team, int numbers, char model, int pos)
             tt->setDirection(rand()%6);
             tt->setPosition(pos);
             knowledge->teams[team].ninjas.append(tt);
+            knowledge->map->cells[pos].robots[team][Ninja]++;
         }
         break;
     }
@@ -425,6 +436,7 @@ void CGame::addRobot(int team, int numbers, char model, int pos)
             ttt->setDirection(rand()%6);
             ttt->setPosition(pos);
             knowledge->teams[team].terminators.append(ttt);
+            knowledge->map->cells[pos].robots[team][Terminator]++;
         }
         break;
     }
@@ -436,10 +448,192 @@ void CGame::addRobot(int team, int numbers, char model, int pos)
             tttt->setDirection(rand()%6);
             tttt->setPosition(pos);
             knowledge->teams[team].predators.append(tttt);
+            knowledge->map->cells[pos].robots[team][Predator]++;
         }
         break;
     }
     }
+}
+
+void CGame::moveRobot(int id, int numbers, char model, int from, int to)
+{
+    if(model == 'E')
+        for(int i = 0; i < numbers; i++)
+            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
+                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+                {
+                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->map->cells[from].robots[id][Explorer]--;
+                    knowledge->map->cells[to].robots[id][Explorer]++;
+                    if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                    }
+                    else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                    }
+                    else
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                    }
+                }
+    if(model == 'T')
+        for(int i = 0; i < numbers; i++)
+            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
+                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+                {
+                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->map->cells[from].robots[id][Terminator]--;
+                    knowledge->map->cells[to].robots[id][Terminator]++;
+                    if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                    }
+                    else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                    }
+                    else
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                    }
+                }
+    if(model == 'N')
+        for(int i = 0; i < numbers; i++)
+            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
+                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+                {
+                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->map->cells[from].robots[id][Ninja]--;
+                    knowledge->map->cells[to].robots[id][Ninja]++;
+                    if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                    }
+                    else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                    }
+                    else
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                    }
+                }
+    if(model == 'P')
+        for(int i = 0; i < numbers; i++)
+            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
+                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+                {
+                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->map->cells[from].robots[id][Predator]--;
+                    knowledge->map->cells[to].robots[id][Predator]++;
+                    if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                    }
+                    else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                    }
+                    else
+                    {
+                        if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
+                        {
+                            if(from%2)
+                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            else
+                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        }
+                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                    }
+                }
+
 }
 
 void CGame::receivePlayer1()
@@ -477,7 +671,39 @@ void CGame::receivePlayer1()
             else
             {
                 buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
-                knowledge->debug(buyErr, Qt::darkRed);
+                knowledge->debug(buyErr, Qt::blue);
+            }
+        }
+    }
+    if(movment != "WAIT")
+    {
+        std::stringstream stream;
+        stream << movment.toStdString();
+        int number;
+        while(stream >> number)
+        {
+            char model;
+            stream >> model;
+            int from, to, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> from;
+            stream >> to;
+            QString mvErr;
+            if(knowledge->canGo(id, number,m, from, to, mvErr))
+                moveRobot(id, number, model, from, to);
+            else
+            {
+                mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
+                knowledge->debug(mvErr, Qt::darkBlue);
             }
         }
     }
@@ -486,11 +712,242 @@ void CGame::receivePlayer1()
     knowledge->debug(movment,Qt::darkMagenta);
     knowledge->debug(purchase,Qt::magenta);
     if(!rest.isEmpty())
-        knowledge->debug(rest,Qt::darkRed);
+        knowledge->debug(rest);
 }
 
 void CGame::receivePlayer2()
 {
-    //    knowledge->debug(p1->readAllStandardError(),Qt::red);
-    //    knowledge->debug(p1->readAllStandardOutput(),Qt::green);
+    int id = 1;
+    QString errors = p2->readAllStandardError();
+    if(!errors.isEmpty())
+        knowledge->debug(errors,Qt::red);
+    QString movment = p2->readLine();
+    QString purchase = p2->readLine();
+    QString rest = p2->readAllStandardOutput();
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
+            }
+        }
+    }
+    if(movment != "WAIT")
+    {
+        std::stringstream stream;
+        stream << movment.toStdString();
+        int number;
+        while(stream >> number)
+        {
+            char model;
+            stream >> model;
+            int from, to, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> from;
+            stream >> to;
+            QString mvErr;
+            if(knowledge->canGo(id, number,m, from, to, mvErr))
+                moveRobot(id, number, model, from, to);
+            else
+            {
+                mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
+                knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    movment.prepend("Player 2 Moves : ");
+    purchase.prepend("Player 2 purchases : ");
+    knowledge->debug(movment,Qt::darkRed);
+    knowledge->debug(purchase,Qt::red);
+    if(!rest.isEmpty())
+        knowledge->debug(rest);
+}
+
+void CGame::receivePlayer3()
+{
+    int id = 2;
+    QString errors = p3->readAllStandardError();
+    if(!errors.isEmpty())
+        knowledge->debug(errors,Qt::red);
+    QString movment = p3->readLine();
+    QString purchase = p3->readLine();
+    QString rest = p3->readAllStandardOutput();
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
+            }
+        }
+    }
+    if(movment != "WAIT")
+    {
+        std::stringstream stream;
+        stream << movment.toStdString();
+        int number;
+        while(stream >> number)
+        {
+            char model;
+            stream >> model;
+            int from, to, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> from;
+            stream >> to;
+            QString mvErr;
+            if(knowledge->canGo(id, number,m, from, to, mvErr))
+                moveRobot(id, number, model, from, to);
+            else
+            {
+                mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
+                knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    movment.prepend("Player 3 Moves : ");
+    purchase.prepend("Player 3 purchases : ");
+    knowledge->debug(movment,Qt::darkYellow);
+    knowledge->debug(purchase,Qt::yellow);
+    if(!rest.isEmpty())
+        knowledge->debug(rest);
+}
+
+void CGame::receivePlayer4()
+{
+    int id = 3;
+    QString errors = p4->readAllStandardError();
+    if(!errors.isEmpty())
+        knowledge->debug(errors,Qt::red);
+    QString movment = p4->readLine();
+    QString purchase = p4->readLine();
+    QString rest = p4->readAllStandardOutput();
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
+            }
+        }
+    }
+    if(movment != "WAIT")
+    {
+        std::stringstream stream;
+        stream << movment.toStdString();
+        int number;
+        while(stream >> number)
+        {
+            char model;
+            stream >> model;
+            int from, to, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> from;
+            stream >> to;
+            QString mvErr;
+            if(knowledge->canGo(id, number,m, from, to, mvErr))
+                moveRobot(id, number, model, from, to);
+            else
+            {
+                mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
+                knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    movment.prepend("Player 4 Moves : ");
+    purchase.prepend("Player 4 purchases : ");
+    knowledge->debug(movment,Qt::darkCyan);
+    knowledge->debug(purchase,Qt::cyan);
+    if(!rest.isEmpty())
+        knowledge->debug(rest);
 }

@@ -27,6 +27,7 @@ private:
     QTimer *player4Time;
     bool inited1;
     void addRobot( int team, int numbers, char model, int pos);
+    void moveRobot(int id, int numbers, char model, int from, int to);
 private slots:
     void read();
     void write();
@@ -36,8 +37,8 @@ private slots:
     void sendPlayer4();
     void receivePlayer1();
     void receivePlayer2();
-//    void receivePlayer3();
-//    void receivePlayer4();
+    void receivePlayer3();
+    void receivePlayer4();
 public slots:
     void compilePlayer1();
     void compilePlayer2();

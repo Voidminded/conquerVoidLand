@@ -115,3 +115,15 @@ bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
     else
         return false;
 }
+
+bool CKnowledge::canGo(int id, int num, int model, int from, int to, QString &error)
+{
+    if(!(map->links.contains(QPair<int,int>(from,to)) || map->links.contains(QPair<int,int>(to,from))))
+        error = QString("There is no link between %1 and %2").arg(from).arg(to);
+    if(map->cells[from].robots[id][model] < num)
+        error = QString("You dont have enough robots in %1").arg(from);
+    if(error.isEmpty())
+        return true;
+    else
+        return false;
+}
