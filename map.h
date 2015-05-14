@@ -9,6 +9,7 @@ struct cell{
     int owner;
     int mineType;
     int value;
+    int robots[4][4];//[team][robot]
 };
 
 class CMap

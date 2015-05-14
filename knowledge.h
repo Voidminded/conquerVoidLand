@@ -22,6 +22,9 @@ public:
     QList<CNinjaRobot*> ninjas;
     QList<CTerminatorRobot*> terminators;
     QList<CPredatorRobot*> predators;
+    int rhadium = 0;
+    int platinum = 0;
+    int gold = 0;
 };
 
 class CKnowledge : public QObject
@@ -36,6 +39,7 @@ public:
     CMap *map;
 //    QList<Robots> robots;
     team teams[4];
+    Property(int, ActiveTeams, activeTeams);
     PropertyGet(QPixmap***, RobotsPics, robotsPics);//Usage [Team][Robot][Direction]
 
 private:

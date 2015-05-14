@@ -4,6 +4,7 @@ CKnowledge *knowledge;
 
 CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(parent)
 {
+    activeTeams = 0;
 //    map = new CMap(27,60, 30,300,900);
     map = new CMap(9,30, 9,27,300);
 //    map = new CMap(4,5, 0,0,0);

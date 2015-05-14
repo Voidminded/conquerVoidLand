@@ -14,13 +14,26 @@ public:
     CGame(QObject *parent = 0);
     ~CGame();
     void compileCode();
-    QProcess *p1;
 
 private:
     QTimer *testTimer;
+    QProcess *p1, *p2, *p3, *p4;
+    QTimer *player1Time;
+    QTimer *player2Time;
+    QTimer *player3Time;
+    QTimer *player4Time;
+    bool inited1;
 private slots:
     void read();
     void write();
+    void sendPlayer1();
+    void sendPlayer2();
+    void sendPlayer3();
+    void sendPlayer4();
+    void receivePlayer1();
+    void receivePlayer2();
+//    void receivePlayer3();
+//    void receivePlayer4();
 public slots:
     void compilePlayer1();
     void compilePlayer2();
