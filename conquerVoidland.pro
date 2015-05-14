@@ -34,4 +34,5 @@ HEADERS  += mainwindow.h \
     ninjarobot.h \
     terminatorrobot.h \
     predatorrobot.h \
-    knowledge.h
+    knowledge.h \
+    robots.h

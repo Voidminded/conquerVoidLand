@@ -18,10 +18,14 @@ public:
     ~CMap();
     QList<QPair<int, int> > links;
     QMap<int, cell> cells;
+    QMap<int, QPair<int, int> > reversePos;
     PropertyGet(int, Width, width);
     PropertyGet(int, Height, height);
     PropertyGet(int**, Map, map);
     PropertyGet(int**, Index, index);
+    PropertyGet(int, NumberOfCells, numberOfCells);
+private:
+
 };
 
 #endif // CMAP_H

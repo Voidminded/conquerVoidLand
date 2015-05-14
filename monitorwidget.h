@@ -2,10 +2,8 @@
 #define MONITORWIDGET_H
 
 #include "base.h"
-#include "explorerrobot.h"
-#include "ninjarobot.h"
-#include "terminatorrobot.h"
-#include "predatorrobot.h"
+#include "robots.h"
+#include "knowledge.h"
 #include <QGLWidget>
 #include <QPainter>
 #include <QPaintEvent>
@@ -28,10 +26,6 @@ public:
     explicit CMonitorWidget(QWidget *parent = 0);
     ~CMonitorWidget();
 private:
-    CExplorerRobot e;
-    CNinjaRobot n;
-    CTerminatorRobot t;
-    CPredatorRobot p;
     QTimer* mainTimer;
     double zoomFactor;
     int screenPosX, screenPosY, lockPosX, lockPosY;
@@ -62,7 +56,11 @@ private:
     QPixmap drawBot3(int color, int dir);
     QPixmap drawBot4(int color, int dir);
     void mapGenerator(QPainter* painter);
+    void drawRobot(QPainter* painter, int team, int robot, int model);
+    //For test:
     QPixmap bb[96];
+    QTimer *testTimer;
+
 signals:
 
 public slots:
@@ -72,6 +70,8 @@ private slots:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent);
+
+    void testfunction();
 };
 
 #endif // CMONITORWIDGET_H

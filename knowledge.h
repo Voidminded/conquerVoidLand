@@ -3,6 +3,7 @@
 
 #include "base.h"
 #include "map.h"
+#include "robots.h"
 #include <QObject>
 
 //union Robots{
@@ -11,6 +12,16 @@
 //    CNinjaRobot n();
 //    CPredatorRobot p();
 //};
+
+class team
+{
+public:
+    int color;
+    QList<CExplorerRobot*> explorers;
+    QList<CNinjaRobot*> ninjas;
+    QList<CTerminatorRobot*> terminators;
+    QList<CPredatorRobot*> predators;
+};
 
 class CKnowledge : public QObject
 {
@@ -21,6 +32,9 @@ public:
 
     CMap *map;
 //    QList<Robots> robots;
+    team teams[4];
+    inline QPixmap getRobotsPic(int team, int model, int direction){return robotsPics[team][model][direction];}
+    PropertyGet(QPixmap***, RobotsPics, robotsPics);//Usage [Team][Robot][Direction]
 signals:
 
 public slots:

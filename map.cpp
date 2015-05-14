@@ -4,6 +4,7 @@ CMap::CMap(int _h, int _w, int _rad, int _plot, int _gold)
 {
     height = _h;
     width = _w;
+    numberOfCells = 0;
     map = new int*[width];
     for(int i = 0; i <width; i++)
         map[i] = new int[height];
@@ -14,10 +15,15 @@ CMap::CMap(int _h, int _w, int _rad, int _plot, int _gold)
         for(int j = 0; j < height; j++)
         {
             map[i][j] = (i+j)%3;
-            index[i][j] = i*height+j;
-            cells[i*height+j].owner = -1;
-            cells[i*height+j].mineType = Neutral;
-            cells[i*height+j].value = 0;
+            if(map[i][j])
+            {
+                index[i][j] = numberOfCells;
+                cells[numberOfCells].owner = -1;
+                cells[numberOfCells].mineType = Neutral;
+                cells[numberOfCells].value = 0;
+                reversePos[numberOfCells] = QPair<int,int>(i,j);
+                numberOfCells++;
+            }
         }
     while(_rad)
     {

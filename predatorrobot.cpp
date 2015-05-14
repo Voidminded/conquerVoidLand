@@ -4,11 +4,6 @@ CPredatorRobot::CPredatorRobot()
 {
     hp = 300;
     model = Predator;
-    loadGraphics();
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            pics[i][j] = draw(i,j);
-
 }
 
 CPredatorRobot::~CPredatorRobot()
@@ -16,8 +11,12 @@ CPredatorRobot::~CPredatorRobot()
 
 }
 
-void CPredatorRobot::loadGraphics()
+QPixmap CPredatorRobot::draw(int color, int dir)
 {
+    QMap<int, QPixmap> robot;
+    QMap<int, QPixmap> light;
+    QMap<int, QPixmap> gun;
+    QPixmap shadow;
     robot[Cyan] = QPixmap("./images/bot4/bot4");
     robot[Magenta] = QPixmap("./images/bot4/bot4");
     robot[Red] = QPixmap("./images/bot4/bot4");
@@ -31,10 +30,6 @@ void CPredatorRobot::loadGraphics()
     light[Yellow] = QPixmap("./images/bot4/yellow4");
     light[Magenta] = QPixmap("./images/bot4/pink4");
     shadow = QPixmap("./images/bot4/shadow4");
-}
-
-QPixmap CPredatorRobot::draw(int color, int dir)
-{
     QPixmap output(360,360);
     output.fill(Qt::transparent);
     QPainter painter(&output);

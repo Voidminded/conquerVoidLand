@@ -4,10 +4,6 @@ CTerminatorRobot::CTerminatorRobot()
 {
     hp = 210;
     model = Terminator;
-    loadGraphics();
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            pics[i][j] = draw(i,j);
 }
 
 CTerminatorRobot::~CTerminatorRobot()
@@ -15,8 +11,14 @@ CTerminatorRobot::~CTerminatorRobot()
 
 }
 
-void CTerminatorRobot::loadGraphics()
+QPixmap CTerminatorRobot::draw(int color, int dir)
 {
+    QMap<int, QPixmap> robot;
+    QMap<int, QPixmap> light;
+    QMap<int, QPixmap> gun;
+    QPixmap shadow;
+    QPixmap zirs;
+    zirs = QPixmap("./images/pa.png");
     robot[Yellow] = QPixmap("./images/bot3/bot3yellow");
     robot[Red] = QPixmap("./images/bot3/bot3red");
     robot[Cyan] = QPixmap("./images/bot3/bot3blue");
@@ -30,10 +32,6 @@ void CTerminatorRobot::loadGraphics()
     gun[Red] = zirs.copy(36,0,60,116);
     gun[Yellow] = zirs.copy(36,0,60,116);
     shadow = QPixmap("./images/bot3/shadow3");
-}
-
-QPixmap CTerminatorRobot::draw(int color, int dir)
-{
     QPixmap output(360,360);
     output.fill(Qt::transparent);
     QPainter painter(&output);

@@ -9,12 +9,11 @@ class CNinjaRobot : public CRobot
 public:
     CNinjaRobot();
     ~CNinjaRobot();
-    QPixmap pics[4][6];
     //Functions :
-    QPixmap draw(int color, int dir);
+    static QPixmap draw(int color, int dir);
+//    static void loadGraphics();
 
 private:
-    void loadGraphics();
 signals:
 
 public slots:

@@ -4,10 +4,6 @@ CNinjaRobot::CNinjaRobot()
 {
     hp = 120;
     model = Ninja;
-    loadGraphics();
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            pics[i][j] = draw(i,j);
 }
 
 CNinjaRobot::~CNinjaRobot()
@@ -15,8 +11,12 @@ CNinjaRobot::~CNinjaRobot()
 
 }
 
-void CNinjaRobot::loadGraphics()
+QPixmap CNinjaRobot::draw(int color, int dir)
 {
+    QMap<int, QPixmap> robot;
+    QMap<int, QPixmap> light;
+    QMap<int, QPixmap> gun;
+    QPixmap shadow;
     robot[Yellow] = QPixmap("./images/bot2/bot2");
     robot[Red] = QPixmap("./images/bot2/bot2");
     robot[Cyan] = QPixmap("./images/bot2/bot2");
@@ -30,10 +30,6 @@ void CNinjaRobot::loadGraphics()
     gun[Cyan] = QPixmap("./images/bot2/gun2blue");
     gun[Magenta] = QPixmap("./images/bot2/gun2pink");
     shadow = QPixmap("./images/bot2/shadow2");
-}
-
-QPixmap CNinjaRobot::draw(int color, int dir)
-{
     QPixmap output(360,360);
     output.fill(Qt::transparent);
     QPainter painter(&output);

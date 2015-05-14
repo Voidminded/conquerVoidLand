@@ -4,10 +4,6 @@ CExplorerRobot::CExplorerRobot()
 {
     hp = 60;
     model = Explorer;
-    loadGraphics();
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            pics[i][j] = draw(i,j);
 }
 
 CExplorerRobot::~CExplorerRobot()
@@ -15,8 +11,14 @@ CExplorerRobot::~CExplorerRobot()
 
 }
 
-void CExplorerRobot::loadGraphics()
+QPixmap CExplorerRobot::draw(int color , int dir)
 {
+    QMap<int, QPixmap> robot;
+    QMap<int, QPixmap> light;
+    QMap<int, QPixmap> gun;
+    QPixmap shadow;
+    QPixmap zirs;
+    zirs = QPixmap("./images/pa.png");
     robot[Yellow] = QPixmap("./images/bot1/bot1yellow");
     robot[Red] = QPixmap("./images/bot1/bot1red");
     robot[Cyan] = QPixmap("./images/bot1/bot1blue");
@@ -30,10 +32,6 @@ void CExplorerRobot::loadGraphics()
     gun[Cyan] = zirs.copy(0,0,30,210);
     gun[Magenta] = zirs.copy(0,0,30,210);
     shadow = QPixmap("./images/bot1/shadow1");
-}
-
-QPixmap CExplorerRobot::draw(int color , int dir)
-{
     QPixmap output(360,360);
     output.fill(Qt::transparent);
     QPainter painter(&output);

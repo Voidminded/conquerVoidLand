@@ -2,7 +2,13 @@
 
 CMonitorWidget::CMonitorWidget(QWidget *parent)
 {
-//    this->setWindowState(Qt::WindowFullScreen);
+    // For test :
+    testTimer = new QTimer();
+    testTimer->setInterval(1000);
+    testTimer->start();
+    connect(testTimer, SIGNAL(timeout()),this, SLOT(testfunction()));
+
+    //    this->setWindowState(Qt::WindowFullScreen);
     this->setFixedSize(900,600);
     mainTimer = new QTimer();
     mainTimer->setInterval(30);
@@ -10,7 +16,7 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     connect(mainTimer,SIGNAL(timeout()),this,SLOT(update()));
     cell = QPixmap("./images/hex/empty");
 
-//    this->setDisabl;
+    //    this->setDisabl;
     zoomFactor = std::max((this->width()*1.0/cell.width())/knowledge->map->getWidth(), (this->height()*1.0/cell.height())/knowledge->map->getHeight());
     qDebug() << zoomFactor;
     screenPosX = screenPosY = 0;
@@ -113,7 +119,7 @@ QPixmap CMonitorWidget::drawBot1(int color, int dir)
     QPixmap output(360,360);
     output.fill(Qt::transparent);
     QPainter painter(&output);
-//    painter.setRenderHint(QPainter::Antialiasing);
+    //    painter.setRenderHint(QPainter::Antialiasing);
     QPixmap leng = zirs.copy(562,164,86,86);
     QPixmap fang = zirs.copy(0,0,30,210);
     QTransform tr(1, 0, 0, 1, leng.width()/2, leng.height()/2 );
@@ -289,7 +295,7 @@ QPixmap CMonitorWidget::drawBot4(int color, int dir)
 
 void CMonitorWidget::paintEvent(QPaintEvent */*event*/)
 {
-//    swapBuffers();
+    //    swapBuffers();
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     if(false)
@@ -313,16 +319,31 @@ void CMonitorWidget::paintEvent(QPaintEvent */*event*/)
 
 void CMonitorWidget::drawScene(QPainter *painter)
 {
-    painter->translate(p.getXOffset(), p.getYOffset());
+    //    painter->translate(p.getXOffset(), p.getYOffset());
     painter->setRenderHint(QPainter::Antialiasing);
     int height = cell.height()-8;
     int width = cell.width()-8;
-    for(int i = 0; i < 24; i++)
-        for(int j = 0; j < 16; j++)
-//            if(knowledge->map->getMap()[i][j])
-            painter->drawPixmap(i*(width-100)+60,(i%2?1:-1)*height/4+j*height+60,bb[(i*8+j)%96]);
-//                painter->drawPixmap(i*(cell.width()-100),(i%2?1:-1)*cell.height()/4+j*cell.height(),bb[(i*8+j)%96]);
-//    painter->drawPixmap(0,0,drawBot2(3,3));
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
+            drawRobot(painter, i, j, Explorer);
+        for(int j = 0; j < knowledge->teams[i].ninjas.count(); j++)
+            drawRobot(painter, i, j, Ninja);
+        for(int j = 0; j < knowledge->teams[i].terminators.count(); j++)
+            drawRobot(painter, i, j, Terminator);
+        for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
+            drawRobot(painter, i, j, Predator);
+        //            painter->drawPixmap(
+        //                     knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].first*(width-100)+60
+        //                    ,(knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].second*height+60
+        //                    ,knowledge->teams[i].explorers.at(j)->pics[knowledge->teams[i].color][knowledge->teams[i].explorers.at(j)->getDirection()]);
+    }
+    //    for(int i = 0; i < 24; i++)
+    //        for(int j = 0; j < 16; j++)
+    //            //            if(knowledge->map->getMap()[i][j])
+    //            painter->drawPixmap(i*(width-100)+60,(i%2?1:-1)*height/4+j*height+60,bb[(i*8+j)%96]);
+    //                painter->drawPixmap(i*(cell.width()-100),(i%2?1:-1)*cell.height()/4+j*cell.height(),bb[(i*8+j)%96]);
+    //    painter->drawPixmap(0,0,drawBot2(3,3));
 }
 
 void CMonitorWidget::wheelEvent(QWheelEvent * event)
@@ -379,7 +400,7 @@ void CMonitorWidget::mapGenerator(QPainter *painter)
 {
     int row = 10;
     int col = 10;
-//    double zoom = 0.5
+    //    double zoom = 0.5
 
 }
 
@@ -387,19 +408,106 @@ void CMonitorWidget::generateBots()
 {
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 6; j++)
-//            bb[i*6+j] = drawBot1(i,j);
-            bb[i*6+j] = e.pics[i][j];
+            //            bb[i*6+j] = drawBot1(i,j);
+            bb[i*6+j] = knowledge->getRobotsPics()[i][Explorer][j];
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 6; j++)
-//            bb[24+i*6+j] = drawBot2(i,j);
-            bb[24+i*6+j] = n.pics[i][j];
+            //            bb[24+i*6+j] = drawBot2(i,j);
+            bb[24+i*6+j] = knowledge->getRobotsPics()[i][Ninja][j];
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 6; j++)
-//            bb[48+i*6+j] = drawBot3(i,j);
-            bb[48+i*6+j] = t.pics[i][j];
+            //            bb[48+i*6+j] = drawBot3(i,j);
+            bb[48+i*6+j] = knowledge->getRobotsPics()[i][Terminator][j];
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 6; j++)
-//            bb[72+i*6+j] = drawBot4(i,j);
-            bb[72+i*6+j] = p.pics[i][j];
+            //            bb[72+i*6+j] = drawBot4(i,j);
+            bb[72+i*6+j] = knowledge->getRobotsPics()[i][Predator][j];
 }
 
+void CMonitorWidget::testfunction()
+{
+    int t = rand() % 4;
+    int r = rand() % 4;
+    knowledge->teams[t].color = t;
+    switch(r)
+    {
+    case 0:
+    {
+        CExplorerRobot* temp = new CExplorerRobot;
+        temp->setDirection(rand()%6);
+        temp->setPosition(rand()%knowledge->map->getNumberOfCells());
+        knowledge->teams[t].explorers.append(temp);
+        break;
+    }
+    case 1:
+    {
+        CNinjaRobot* tt = new CNinjaRobot;
+        tt->setDirection(rand()%6);
+        tt->setPosition(rand()%knowledge->map->getNumberOfCells());
+        knowledge->teams[t].ninjas.append(tt);
+        break;
+    }
+    case 2:
+    {
+        CTerminatorRobot* ttt = new CTerminatorRobot;
+        ttt->setDirection(rand()%6);
+        ttt->setPosition(rand()%knowledge->map->getNumberOfCells());
+        knowledge->teams[t].terminators.append(ttt);
+        break;
+    }
+    case 3:
+    {
+        CPredatorRobot* tttt = new CPredatorRobot;
+        tttt->setDirection(rand()%6);
+        tttt->setPosition(rand()%knowledge->map->getNumberOfCells());
+        knowledge->teams[t].predators.append(tttt);
+        break;
+    }
+    }
+}
+
+void CMonitorWidget::drawRobot(QPainter *painter, int team, int robot, int model)
+{
+    int height = cell.height()-8;
+    int width = cell.width()-8;
+    if(model == Explorer)
+    {
+//        qDebug() << knowledge->teams[team].explorers.at(robot)->getXOffset() << knowledge->teams[team].explorers.at(robot)->getYOffset();
+        painter->translate(knowledge->teams[team].explorers.at(robot)->getXOffset(), knowledge->teams[team].explorers.at(robot)->getYOffset());
+        painter->drawPixmap(knowledge->map->reversePos[knowledge->teams[team].explorers.at(robot)->getPosition()].first*(width-100)+60
+                ,(knowledge->map->reversePos[knowledge->teams[team].explorers.at(robot)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[team].explorers.at(robot)->getPosition()].second*height+60
+//                ,knowledge->teams[team].explorers.at(robot)->pics[knowledge->teams[team].color][knowledge->teams[team].explorers.at(robot)->getDirection()]);
+                ,knowledge->getRobotsPics()[team][Explorer][knowledge->teams[team].explorers.at(robot)->getDirection()]);
+        painter->translate(-knowledge->teams[team].explorers.at(robot)->getXOffset(), -knowledge->teams[team].explorers.at(robot)->getYOffset());
+    }
+    else if(model == Ninja)
+    {
+//        qDebug() << knowledge->teams[team].ninjas.at(robot)->getXOffset() << knowledge->teams[team].ninjas.at(robot)->getYOffset();
+        painter->translate(knowledge->teams[team].ninjas.at(robot)->getXOffset(), knowledge->teams[team].ninjas.at(robot)->getYOffset());
+        painter->drawPixmap(knowledge->map->reversePos[knowledge->teams[team].ninjas.at(robot)->getPosition()].first*(width-100)+60
+                ,(knowledge->map->reversePos[knowledge->teams[team].ninjas.at(robot)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[team].ninjas.at(robot)->getPosition()].second*height+60
+//                ,knowledge->teams[team].ninjas.at(robot)->pics[knowledge->teams[team].color][knowledge->teams[team].ninjas.at(robot)->getDirection()]);
+                ,knowledge->getRobotsPics()[team][Ninja][knowledge->teams[team].ninjas.at(robot)->getDirection()]);
+        painter->translate(-knowledge->teams[team].ninjas.at(robot)->getXOffset(), -knowledge->teams[team].ninjas.at(robot)->getYOffset());
+    }
+    else if(model == Terminator)
+    {
+//        qDebug() << knowledge->teams[team].terminators.at(robot)->getXOffset() << knowledge->teams[team].terminators.at(robot)->getYOffset();
+        painter->translate(knowledge->teams[team].terminators.at(robot)->getXOffset(), knowledge->teams[team].terminators.at(robot)->getYOffset());
+        painter->drawPixmap(knowledge->map->reversePos[knowledge->teams[team].terminators.at(robot)->getPosition()].first*(width-100)+60
+                ,(knowledge->map->reversePos[knowledge->teams[team].terminators.at(robot)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[team].terminators.at(robot)->getPosition()].second*height+60
+//                ,knowledge->teams[team].terminators.at(robot)->pics[knowledge->teams[team].color][knowledge->teams[team].terminators.at(robot)->getDirection()]);
+                ,knowledge->getRobotsPics()[team][Terminator][knowledge->teams[team].terminators.at(robot)->getDirection()]);
+        painter->translate(-knowledge->teams[team].terminators.at(robot)->getXOffset(), -knowledge->teams[team].terminators.at(robot)->getYOffset());
+    }
+    else if(model == Predator)
+    {
+//        qDebug() << knowledge->teams[team].predators.at(robot)->getXOffset() << knowledge->teams[team].predators.at(robot)->getYOffset();
+        painter->translate(knowledge->teams[team].predators.at(robot)->getXOffset(), knowledge->teams[team].predators.at(robot)->getYOffset());
+        painter->drawPixmap(knowledge->map->reversePos[knowledge->teams[team].predators.at(robot)->getPosition()].first*(width-100)+60
+                ,(knowledge->map->reversePos[knowledge->teams[team].predators.at(robot)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[team].predators.at(robot)->getPosition()].second*height+60
+//                ,knowledge->teams[team].predators.at(robot)->pics[knowledge->teams[team].color][knowledge->teams[team].predators.at(robot)->getDirection()]);
+                ,knowledge->getRobotsPics()[team][Predator][knowledge->teams[team].predators.at(robot)->getDirection()]);
+        painter->translate(-knowledge->teams[team].predators.at(robot)->getXOffset(), -knowledge->teams[team].predators.at(robot)->getYOffset());
+    }
+}

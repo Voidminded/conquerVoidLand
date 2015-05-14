@@ -2,7 +2,6 @@
 #define CROBOT_H
 
 #include "base.h"
-#include "knowledge.h"
 #include <QPixmap>
 #include <QMap>
 #include <QPainter>
@@ -15,23 +14,21 @@ class CRobot: public QObject
     Q_OBJECT
 public:
     explicit CRobot(QObject *parent = 0);
+//    CRobot(const CRobot &obj);
     ~CRobot();
-    QPixmap zirs;
 protected:
     int rot;
     float ocu;
     float oAdder;
-    QMap<int, QPixmap> robot;
-    QMap<int, QPixmap> light;
-    QMap<int, QPixmap> gun;
-    QPixmap shadow;
     //Funtions :
-    virtual void loadGraphics(){}
-    virtual QPixmap draw(){}    
+//    virtual void loadGraphics(){}
+//    static virtual QPixmap draw(){}
 private:
     float xAdder;
     float yAdder;
     QTimer *shiftTimer;
+    Property(int, Position, position);
+    Property(int, Direction, dir);
     Property(int, HitPoint, hp);
     PropertyGet(int, Model, model);
     PropertyGet(float, XOffset, xOffset);
