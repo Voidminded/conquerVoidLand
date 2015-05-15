@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     mapWidget = new CLoadMapWidget(this);
     tabWidget->tabs->addTab(mapWidget, "Map");
 
+    gameWidget = new CGameWidget(this);
+    tabWidget->tabs->addTab(gameWidget, "Game");
+
     printer = new CStatusPrinter();
 
     statusWidget = new CStatusWidget(printer );
@@ -34,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     workspace->addSubWindow(monitorWidget, Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     monitorWidget->setWindowState(Qt::WindowMaximized );
 
+
 //    statusWidget->statusText->setFixedWidth(this->width());
     /* Connections */
     connect(statusUpdateTimer, SIGNAL(timeout()), statusWidget, SLOT(update()));
@@ -48,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(game,SIGNAL(activateTeam(int,bool)),knowledge,SLOT(activateSlot(int,bool)));
     connect(mapWidget,SIGNAL(mapGenerationSignal(int,int,int,int,int)),knowledge,SLOT(generateMap(int,int,int,int,int)));
     connect(knowledge,SIGNAL(updateMonitorView()),monitorWidget,SLOT(updateSize()));
+    connect(gameWidget->playPB,SIGNAL(clicked()),game,SLOT(initiateGame()));
     //test :
 }
 

@@ -104,10 +104,10 @@ CMap::~CMap()
 
 }
 
-bool CMap::checkCells()
+bool CMap::checkCells(bool player)
 {
     for(QMap<int, cell>::iterator it = cells.begin(); it != cells.end(); ++it)
-        if(it->mineType == Neutral)
-            return true;
+            if(it->mineType == Neutral && (player?(it->owner == -1):true))
+                return true;
     return false;
 }

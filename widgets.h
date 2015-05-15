@@ -71,4 +71,14 @@ signals:
     void mapGenerationSignal(int,int,int,int,int);
 };
 
+class CGameWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    CGameWidget(QWidget* parent = 0);
+    ~CGameWidget();
+    QPushButton *playPB;
+};
+
+
 #endif // WIDGETS_H

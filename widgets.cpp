@@ -222,3 +222,19 @@ void CLoadMapWidget::pbSlot()
                 ,pEdit->text().toInt()
                 ,gEdit->text().toInt());
 }
+
+// -------------- Game Widget ---------------
+
+CGameWidget::CGameWidget( QWidget* parent)
+    : QWidget(parent)
+{
+    QGridLayout *lOut = new QGridLayout(this);
+    this->setLayout(lOut);
+    playPB = new QPushButton("Play");
+    lOut->addWidget(playPB);
+}
+
+CGameWidget::~CGameWidget()
+{
+
+}

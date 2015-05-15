@@ -15,15 +15,18 @@ CGame::CGame(QObject *parent)  : QObject(parent)
     p4 = new QProcess(this);
     p4->setProcessChannelMode(QProcess::SeparateChannels);
 
+
+    playTimer = new QTimer();
+    playTimer->setInterval(_COMMAND_INTERVAL);
+    playTimer->stop();
+
+    // Connections :
     connect(p1,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer1()));
     connect(p2,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer2()));
     connect(p3,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer3()));
     connect(p4,SIGNAL(readyReadStandardOutput()), this, SLOT(receivePlayer4()));
+    connect(playTimer, SIGNAL(timeout()), this, SLOT(playing()));
 
-    testTimer = new QTimer();
-    testTimer->setInterval(500);
-    testTimer->start();
-    connect(testTimer, SIGNAL(timeout()), this, SLOT(sendPlayer1()));
 }
 
 CGame::~CGame()
@@ -82,7 +85,6 @@ void CGame::compilePlayer1()
     else
     {
         knowledge->debug("Player 1 code compiled Successfully !",Qt::green);
-//    p1->start("./player1.out", QProcess::ReadWrite);
         emit activateTeam(0, true);
         emit activateTeam1Label("Enabled");
     }
@@ -743,8 +745,8 @@ void CGame::receivePlayer1()
     purchase.prepend("Player 1 purchases : ");
     knowledge->debug(movment,Qt::darkMagenta);
     knowledge->debug(purchase,Qt::magenta);
-    if(!rest.isEmpty())
-        knowledge->debug(rest);
+//    if(!rest.isEmpty())
+//        knowledge->debug(rest);
 }
 
 void CGame::receivePlayer2()
@@ -822,8 +824,8 @@ void CGame::receivePlayer2()
     purchase.prepend("Player 2 purchases : ");
     knowledge->debug(movment,Qt::darkRed);
     knowledge->debug(purchase,Qt::red);
-    if(!rest.isEmpty())
-        knowledge->debug(rest);
+//    if(!rest.isEmpty())
+//        knowledge->debug(rest);
 }
 
 void CGame::receivePlayer3()
@@ -901,8 +903,8 @@ void CGame::receivePlayer3()
     purchase.prepend("Player 3 purchases : ");
     knowledge->debug(movment,Qt::darkYellow);
     knowledge->debug(purchase,Qt::yellow);
-    if(!rest.isEmpty())
-        knowledge->debug(rest);
+//    if(!rest.isEmpty())
+//        knowledge->debug(rest);
 }
 
 void CGame::receivePlayer4()
@@ -980,7 +982,94 @@ void CGame::receivePlayer4()
     purchase.prepend("Player 4 purchases : ");
     knowledge->debug(movment,Qt::darkCyan);
     knowledge->debug(purchase,Qt::cyan);
-    if(!rest.isEmpty())
-        knowledge->debug(rest);
+//    if(!rest.isEmpty())
+//        knowledge->debug(rest);
 }
 
+void CGame::initiateGame()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        if(knowledge->teams[i].active)
+        {
+            if(knowledge->map->checkCells(true))
+                while(1)
+                {
+                    int selected = rand()%(knowledge->map->getNumberOfCells());
+                    if( knowledge->map->cells.count(selected) && knowledge->map->cells[selected].mineType == Neutral && knowledge->map->cells[selected].owner == -1)
+                    {
+                        knowledge->map->cells[selected].owner = i;
+                        break;
+                    }
+                }
+            else
+            {
+                int selected = rand()%(knowledge->map->getNumberOfCells());
+                knowledge->map->cells[selected].owner = i;
+            }
+        }
+    }
+    if(knowledge->teams[0].active)
+    {
+        p1->start("./player1.out", QProcess::ReadWrite);
+        p1->waitForStarted();
+    }
+    if(knowledge->teams[1].active)
+    {
+        p2->start("./player2.out", QProcess::ReadWrite);
+        p2->waitForStarted();
+    }
+    if(knowledge->teams[2].active)
+    {
+        p3->start("./player3.out", QProcess::ReadWrite);
+        p3->waitForStarted();
+    }
+    if(knowledge->teams[3].active)
+    {
+        p4->start("./player4.out", QProcess::ReadWrite);
+        p4->waitForStarted();
+    }
+
+    playTimer->start();
+}
+
+void CGame::playing()
+{
+    if(knowledge->teams[0].active)
+    {
+        sendPlayer1();
+        if(!p1->waitForReadyRead(_PLAYER_RESPONSE_TIME))
+        {
+            knowledge->debug("Player 1 did not provide result in time, Not playing anymore");
+            p1->close();
+        }
+    }
+    if(knowledge->teams[1].active)
+    {
+        sendPlayer2();
+        if(!p2->waitForReadyRead(_PLAYER_RESPONSE_TIME))
+        {
+            knowledge->debug("Player 2 did not provide result in time, Not playing anymore");
+            p2->close();
+        }
+    }
+    if(knowledge->teams[2].active)
+    {
+        sendPlayer3();
+        if(!p3->waitForReadyRead(_PLAYER_RESPONSE_TIME))
+        {
+            knowledge->debug("Player 3 did not provide result in time, Not playing anymore");
+            p3->close();
+        }
+    }
+    if(knowledge->teams[3].active)
+    {
+        sendPlayer4();
+        if(!p4->waitForReadyRead(_PLAYER_RESPONSE_TIME))
+        {
+            knowledge->debug("Player 4 did not provide result in time, Not playing anymore");
+            p4->close();
+        }
+    }
+
+}

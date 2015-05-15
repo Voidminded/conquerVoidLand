@@ -24,6 +24,7 @@ public:
     CTabDockWidget *tabWidget;
     CLoadPlayersWidget *loadWidget;
     CLoadMapWidget *mapWidget;
+    CGameWidget *gameWidget;
     QTimer* statusUpdateTimer;
     CGame* game;
 };

@@ -17,6 +17,7 @@ class CMap
 public:
     CMap(int _h, int _w, int _rad, int _plot, int _gold);
     ~CMap();
+    bool checkCells(bool player = false);
     QList<QPair<int, int> > links;
     QMap<int, cell> cells;
     QMap<int, QPair<int, int> > reversePos;
@@ -29,7 +30,7 @@ public:
     PropertyGet(int, NumberOfCells, numberOfCells);
 private:
     QList<QPair<int, int> > activeCells;
-    bool checkCells();
+
 
 };
 

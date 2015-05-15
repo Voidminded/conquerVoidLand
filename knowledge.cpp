@@ -5,7 +5,7 @@ CKnowledge *knowledge;
 CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(parent)
 {
     activeTeams = 0;
-    for(int i = 0; i < 0; i++)
+    for(int i = 0; i < 4; i++)
     {
         teams[i].active = false;
         teams[i].color = i;
