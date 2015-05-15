@@ -436,6 +436,7 @@ void CMonitorWidget::testfunction()
         temp->setDirection(rand()%6);
         temp->setPosition(rand()%knowledge->map->getNumberOfCells());
         knowledge->teams[t].explorers.append(temp);
+        knowledge->map->cells[temp->getPosition()].owner = t;
         break;
     }
     case 1:
