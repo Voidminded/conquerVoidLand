@@ -74,10 +74,18 @@ void CGame::compilePlayer1()
 
     QString error = process.readAllStandardError();
     if(!error.isEmpty())
+    {
         knowledge->debug(error,Qt::red);
+        emit activateTeam(0, false);
+        emit activateTeam1Label("Disbaled");
+    }
     else
+    {
         knowledge->debug("Player 1 code compiled Successfully !",Qt::green);
-    p1->start("./player1.out", QProcess::ReadWrite);
+//    p1->start("./player1.out", QProcess::ReadWrite);
+        emit activateTeam(0, true);
+        emit activateTeam1Label("Enabled");
+    }
 }
 
 void CGame::compilePlayer2()
@@ -89,9 +97,17 @@ void CGame::compilePlayer2()
 
     QString error = process.readAllStandardError();
     if(!error.isEmpty())
+    {
         knowledge->debug(error,Qt::red);
+        emit activateTeam(1, false);
+        emit activateTeam2Label("Disbaled");
+    }
     else
+    {
         knowledge->debug("Player 2 code compiled Successfully !",Qt::green);
+        emit activateTeam(1, true);
+        emit activateTeam2Label("Enabled");
+    }
 }
 
 void CGame::compilePlayer3()
@@ -103,9 +119,17 @@ void CGame::compilePlayer3()
 
     QString error = process.readAllStandardError();
     if(!error.isEmpty())
+    {
         knowledge->debug(error,Qt::red);
+        emit activateTeam(2, false);
+        emit activateTeam3Label("Disbaled");
+    }
     else
+    {
         knowledge->debug("Player 3 code compiled Successfully !",Qt::green);
+        emit activateTeam(2, true);
+        emit activateTeam3Label("Enabled");
+    }
 }
 
 void CGame::compilePlayer4()
@@ -117,9 +141,17 @@ void CGame::compilePlayer4()
 
     QString error = process.readAllStandardError();
     if(!error.isEmpty())
+    {
         knowledge->debug(error,Qt::red);
+        emit activateTeam(3, false);
+        emit activateTeam4Label("Disbaled");
+    }
     else
+    {
         knowledge->debug("Player 4 code compiled Successfully !",Qt::green);
+        emit activateTeam(3, true);
+        emit activateTeam4Label("Enabled");
+    }
 }
 
 void CGame::sendPlayer1()
@@ -951,3 +983,4 @@ void CGame::receivePlayer4()
     if(!rest.isEmpty())
         knowledge->debug(rest);
 }
+

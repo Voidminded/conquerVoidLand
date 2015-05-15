@@ -23,6 +23,7 @@ public:
     CStatusWidget *statusWidget;
     CTabDockWidget *tabWidget;
     CLoadPlayersWidget *loadWidget;
+    CLoadMapWidget *mapWidget;
     QTimer* statusUpdateTimer;
     CGame* game;
 };

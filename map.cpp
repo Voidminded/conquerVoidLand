@@ -58,42 +58,45 @@ CMap::CMap(int _h, int _w, int _rad, int _plot, int _gold)
             if(!links.contains(QPair<int, int>(it->second, it->first)))
                 links.append(*it);
     }
-    while(_rad)
+    while(_rad && checkCells())
     {
         int selected = rand()%(height*width);
         if( cells.count(selected) && cells[selected].mineType == Neutral)
         {
-            int toAdd = std::min(_rad, rand()%7);
+            int toAdd = std::min(_rad, rand()%6+1);
             _rad -= toAdd;
             cells[selected].mineType = Rhodium;
             cells[selected].value = toAdd;
         }
         qDebug() << "Rad : " << _rad << selected;
     }
-    while(_plot)
+    while(_plot && checkCells())
     {
         int selected = rand()%(height*width);
         if( cells.count(selected) && cells[selected].mineType == Neutral)
         {
-            int toAdd = std::min(_plot, rand()%7);
+            int toAdd = std::min(_plot, rand()%6+1);
             _plot -= toAdd;
             cells[selected].mineType = Platinum;
             cells[selected].value = toAdd;
         }
         qDebug() << "Plat : " << _plot<< selected;
     }
-    while(_gold)
+    while(_gold && checkCells())
     {
         int selected = rand()%(height*width);
         if( cells.count(selected) && cells[selected].mineType == Neutral)
         {
-            int toAdd = std::min(_gold, rand()%7);
+            int toAdd = std::min(_gold, rand()%6+1);
             _gold -= toAdd;
             cells[selected].mineType = Gold;
             cells[selected].value = toAdd;
         }
         qDebug() << "Gold : " << _gold << selected;
     }
+    error = "";
+    if(!checkCells())
+        error = "Could'nt fit all the resources in the map !";
 }
 
 CMap::~CMap()
@@ -101,3 +104,10 @@ CMap::~CMap()
 
 }
 
+bool CMap::checkCells()
+{
+    for(QMap<int, cell>::iterator it = cells.begin(); it != cells.end(); ++it)
+        if(it->mineType == Neutral)
+            return true;
+    return false;
+}

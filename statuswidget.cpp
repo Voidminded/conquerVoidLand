@@ -10,12 +10,12 @@ CStatusWidget::CStatusWidget(CStatusPrinter* _statusPrinter)
     titleLbl = new QLabel(tr("Messages"));
     statusText->setMaximumWidth(1000);
     QWidget* w = new QWidget(this);
-    statusText->setFixedSize(600, 200);
+    statusText->setFixedSize(1000, 200);
     QGridLayout* layout = new QGridLayout(w);
     layout->addWidget(statusText, 0, 0);
     layout->setAlignment(statusText, Qt::AlignLeft);
     layout->setColumnMinimumWidth(0, 500);
-    statusText->resize(1000, 200);
+    statusText->resize(1200, 200);
     w->setLayout(layout);
     this->setSizeIncrement(this->width(), 100);
     statusText->setReadOnly(true);

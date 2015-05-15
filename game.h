@@ -44,6 +44,12 @@ public slots:
     void compilePlayer2();
     void compilePlayer3();
     void compilePlayer4();
+signals:
+    void activateTeam(int, bool);
+    void activateTeam1Label(QString);
+    void activateTeam2Label(QString);
+    void activateTeam3Label(QString);
+    void activateTeam4Label(QString);
 };
 
 #endif // CGAME_H

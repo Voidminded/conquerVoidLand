@@ -89,17 +89,18 @@ CLoadPlayersWidget::CLoadPlayersWidget( QWidget* parent)
     this->setLayout(lOut);
     for(int i = 0; i < 4; i++)
     {
-        lOut->addWidget(&labels[i],i,1);
+        lOut->addWidget(&labels[i],(i+1)*2-1,1);
         cBoxes[i].setChecked(false);
         buttons[i].setDisabled(true);
         buttons[i].setText("Browse");
-        lOut->addWidget(&cBoxes[i],i,0);
-        lOut->addWidget(&buttons[i],i,2);
+        lOut->addWidget(&cBoxes[i],(i+1)*2-1,0);
+        lOut->addWidget(&buttons[i],(i+1)*2-1,2);
         compileButt[i] = new QPushButton("Compile !");
         compileButt[i]->setDisabled(true);
-        lOut->addWidget(compileButt[i],i,3);
+        lOut->addWidget(compileButt[i],(i+1)*2-1,3);
+        activeLabels[i] = new QLabel("Disabled");
+        lOut->addWidget(activeLabels[i],(i+1)*2,1);
     }
-
 
     for(int i = 0; i < 4; i++)
         connect(&cBoxes[i],SIGNAL(clicked(bool)),&buttons[i],SLOT(setEnabled(bool)));
@@ -160,4 +161,64 @@ void CLoadPlayersWidget::load4()
         system(path.toStdString().c_str());
         compileButt[3]->setEnabled(true);
     }
+}
+
+// -------------- Load Map Widget ---------------
+
+CLoadMapWidget::CLoadMapWidget( QWidget* parent)
+    : QWidget(parent)
+{
+    QGridLayout *lOut = new QGridLayout(this);
+    this->setLayout(lOut);
+    rLabel = new QLabel("Rows : ");
+    cLabel = new QLabel("Columns : ");
+    row = new QComboBox();
+    for(int i = 1; i <= 30; i++)
+        row->addItem(QString::number(i));
+    col = new QComboBox();
+    for(int i = 1; i <= 60; i++)
+        col->addItem(QString::number(i));
+    col->setCurrentIndex(26);
+    row->setCurrentIndex(8);
+    lOut->addWidget(rLabel,1,0);
+    lOut->addWidget(row,1,1);
+    lOut->addWidget(cLabel,1,2);
+    lOut->addWidget(col,1,3);
+    QLabel *rLab = new QLabel("Rhodium : ");
+    rLab->setStyleSheet("QLabel {color : coral}");
+    lOut->addWidget(rLab, 3,0);
+    rEdit = new QLineEdit("9");
+    rEdit->setStyleSheet("QLineEdit {color : coral; background-color : black}");
+    lOut->addWidget(rEdit, 3,1);
+    QLabel *pLab = new QLabel("Platinum : ");
+    pLab->setStyleSheet("QLabel {color : slategray}");
+    lOut->addWidget(pLab, 4,0);
+    pEdit = new QLineEdit("27");
+    pEdit->setStyleSheet("QLineEdit {color : slategray; background-color : black}");
+    lOut->addWidget(pEdit, 4,1);
+    QLabel *gLab = new QLabel("Gold : ");
+    gLab->setStyleSheet("QLabel {color : goldenrod}");
+    lOut->addWidget(gLab, 5,0);
+    gEdit = new QLineEdit("300");
+    gEdit->setStyleSheet("QLineEdit {color : goldenrod; background-color : black}");
+    lOut->addWidget(gEdit, 5,1);
+    generateMap = new QPushButton("Update");
+    lOut->addWidget(generateMap, 6,1);
+
+    connect(generateMap, SIGNAL(clicked()), this,SLOT(pbSlot()));
+}
+
+CLoadMapWidget::~CLoadMapWidget()
+{
+
+}
+
+void CLoadMapWidget::pbSlot()
+{
+    emit mapGenerationSignal(
+                row->currentIndex()+1
+                ,col->currentIndex()+1
+                ,rEdit->text().toInt()
+                ,pEdit->text().toInt()
+                ,gEdit->text().toInt());
 }

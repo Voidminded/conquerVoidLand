@@ -22,9 +22,10 @@ public:
     QList<CNinjaRobot*> ninjas;
     QList<CTerminatorRobot*> terminators;
     QList<CPredatorRobot*> predators;
-    int rhodium = 0;
-    int platinum = 0;
-    int gold = 0;
+    int rhodium;
+    int platinum;
+    int gold;
+    bool active;
 };
 
 class CKnowledge : public QObject
@@ -48,8 +49,10 @@ public:
 private:
     CStatusPrinter *printer;
 signals:
-
+    void updateMonitorView();
 public slots:
+    void activateSlot(int i, bool s);
+    void generateMap(int _r, int _c, int _rh, int _pl, int _gl);
 };
 
 extern CKnowledge* knowledge;

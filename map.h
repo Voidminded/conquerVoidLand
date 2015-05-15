@@ -25,9 +25,11 @@ public:
     PropertyGet(int, Height, height);
     PropertyGet(int**, Map, map);
     PropertyGet(int**, Index, index);
+    PropertyGet(QString, Error, error);
     PropertyGet(int, NumberOfCells, numberOfCells);
 private:
     QList<QPair<int, int> > activeCells;
+    bool checkCells();
 
 };
 

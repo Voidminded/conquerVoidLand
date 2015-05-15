@@ -511,3 +511,10 @@ void CMonitorWidget::drawRobot(QPainter *painter, int team, int robot, int model
         painter->translate(-knowledge->teams[team].predators.at(robot)->getXOffset(), -knowledge->teams[team].predators.at(robot)->getYOffset());
     }
 }
+
+void CMonitorWidget::updateSize()
+{
+    zoomFactor = std::max((this->width()*1.0/cell.width())/knowledge->map->getWidth(), (this->height()*1.0/cell.height())/knowledge->map->getHeight());
+    qDebug() << zoomFactor;
+    screenPosX = screenPosY = 0;
+}

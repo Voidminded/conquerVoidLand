@@ -5,8 +5,20 @@ CKnowledge *knowledge;
 CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(parent)
 {
     activeTeams = 0;
+    for(int i = 0; i < 0; i++)
+    {
+        teams[i].active = false;
+        teams[i].color = i;
+        teams[i].explorers.clear();
+        teams[i].gold = 0;
+        teams[i].ninjas.clear();
+        teams[i].platinum = 0;
+        teams[i].predators.clear();
+        teams[i].rhodium = 0;
+        teams[i].terminators.clear();
+    }
 //    map = new CMap(27,60, 30,300,900);
-    map = new CMap(9,30, 9,27,300);
+    map = new CMap(9,27, 9,27,300);
 //    map = new CMap(4,5, 0,0,0);
 
     printer = _printer;
@@ -126,4 +138,18 @@ bool CKnowledge::canGo(int id, int num, int model, int from, int to, QString &er
         return true;
     else
         return false;
+}
+
+void CKnowledge::activateSlot(int i, bool s)
+{
+    teams[i].active = s;
+}
+
+void CKnowledge::generateMap(int _r, int _c, int _rh, int _pl, int _gl)
+{
+    delete map;
+    map = new CMap(_r, _c, _rh, _pl, _gl);
+    if(map->getError() != "")
+        debug("!!! Error : " + map->getError() + " !!!", Qt::red);
+    emit updateMonitorView();
 }

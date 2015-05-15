@@ -63,13 +63,13 @@ private:
 signals:
 
 public slots:
+    void updateSize();
 private slots:
     void paintEvent(QPaintEvent *);
     void wheelEvent(QWheelEvent * event);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent);
-
     void testfunction();
 };
 

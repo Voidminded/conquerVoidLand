@@ -12,6 +12,8 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QFileDialog>
+#include <QComboBox>
+#include <QLineEdit>
 
 class CTabDockWidget : public QDockWidget
 {
@@ -41,6 +43,7 @@ public:
     CLoadPlayersWidget(QWidget* parent = 0);
     ~CLoadPlayersWidget();
     QPushButton *compileButt[4];
+    QLabel *activeLabels[4];
 protected:
     QLabel labels[4];
     QPushButton buttons[4];
@@ -52,6 +55,20 @@ public slots:
     void load4();
 };
 
-
+class CLoadMapWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    CLoadMapWidget(QWidget* parent = 0);
+    ~CLoadMapWidget();
+    QComboBox *row, *col;
+    QLabel *rLabel, *cLabel;
+    QLineEdit *gEdit, *pEdit, *rEdit;
+    QPushButton *generateMap;
+private slots:
+    void pbSlot();
+signals:
+    void mapGenerationSignal(int,int,int,int,int);
+};
 
 #endif // WIDGETS_H
