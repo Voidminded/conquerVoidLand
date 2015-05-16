@@ -3,6 +3,8 @@
 CExplorerRobot::CExplorerRobot()
 {
     hp = 60;
+    power = 60;
+    pr.gold = 20;
     model = Explorer;
 }
 

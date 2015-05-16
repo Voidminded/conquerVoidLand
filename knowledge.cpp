@@ -10,16 +10,14 @@ CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(pare
         teams[i].active = false;
         teams[i].color = i;
         teams[i].explorers.clear();
-        teams[i].gold = 0;
+        teams[i].gold = 60;
         teams[i].ninjas.clear();
         teams[i].platinum = 0;
         teams[i].predators.clear();
         teams[i].rhodium = 0;
         teams[i].terminators.clear();
     }
-//    map = new CMap(27,60, 30,300,900);
     map = new CMap(9,27, 9,27,300);
-//    map = new CMap(4,5, 0,0,0);
 
     printer = _printer;
 
@@ -74,9 +72,9 @@ bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
         removeP.gold = e.getPrice().gold*num;
         removeP.platinum = e.getPrice().platinum*num;
         removeP.rhodium = e.getPrice().rhodium*num;
-        if(!(teams[id].gold <= e.getPrice().gold*num)
-                || !(teams[id].platinum <= e.getPrice().platinum*num)
-                || !(teams[id].rhodium <= e.getPrice().rhodium*num))
+        if(!(teams[id].gold >= e.getPrice().gold*num)
+                || !(teams[id].platinum >= e.getPrice().platinum*num)
+                || !(teams[id].rhodium >= e.getPrice().rhodium*num))
             error = "Insufficient budget";
         if(map->cells[pos].owner != id)
             error = "Invalid position";
@@ -86,9 +84,9 @@ bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
         removeP.gold = t.getPrice().gold*num;
         removeP.platinum = t.getPrice().platinum*num;
         removeP.rhodium = t.getPrice().rhodium*num;
-        if(!(teams[id].gold <= t.getPrice().gold*num)
-                || !(teams[id].platinum <= t.getPrice().platinum*num)
-                || !(teams[id].rhodium <= t.getPrice().rhodium*num))
+        if(!(teams[id].gold >= t.getPrice().gold*num)
+                || !(teams[id].platinum >= t.getPrice().platinum*num)
+                || !(teams[id].rhodium >= t.getPrice().rhodium*num))
             error = "Insufficient budget";
         if(map->cells[pos].owner != id)
             error = "Invalid position";
@@ -98,9 +96,9 @@ bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
         removeP.gold = n.getPrice().gold*num;
         removeP.platinum = n.getPrice().platinum*num;
         removeP.rhodium = n.getPrice().rhodium*num;
-        if(!(teams[id].gold <= n.getPrice().gold*num)
-                || !(teams[id].platinum <= n.getPrice().platinum*num)
-                || !(teams[id].rhodium <= n.getPrice().rhodium*num))
+        if(!(teams[id].gold >= n.getPrice().gold*num)
+                || !(teams[id].platinum >= n.getPrice().platinum*num)
+                || !(teams[id].rhodium >= n.getPrice().rhodium*num))
             error = "Insufficient budget";
         if(map->cells[pos].owner != id)
             error = "Invalid position";
@@ -110,9 +108,9 @@ bool CKnowledge::canBuy(int id, int num, int model, int pos, QString &error)
         removeP.gold = p.getPrice().gold*num;
         removeP.platinum = p.getPrice().platinum*num;
         removeP.rhodium = p.getPrice().rhodium*num;
-        if(!(teams[id].gold <= p.getPrice().gold*num)
-                || !(teams[id].platinum <= p.getPrice().platinum*num)
-                || !(teams[id].rhodium <= p.getPrice().rhodium*num))
+        if(!(teams[id].gold >= p.getPrice().gold*num)
+                || !(teams[id].platinum >= p.getPrice().platinum*num)
+                || !(teams[id].rhodium >= p.getPrice().rhodium*num))
             error = "Insufficient budget";
         if(map->cells[pos].owner != id)
             error = "Invalid position";

@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     gameWidget = new CGameWidget(this);
     tabWidget->tabs->addTab(gameWidget, "Game");
 
+    info = new CInfoWidget(this);
+    tabWidget->tabs->addTab(info, "Info");
+
     printer = new CStatusPrinter();
 
     statusWidget = new CStatusWidget(printer );

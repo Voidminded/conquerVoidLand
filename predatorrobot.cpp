@@ -3,6 +3,11 @@
 CPredatorRobot::CPredatorRobot()
 {
     hp = 300;
+    multiTarget = true;
+    power = 90;
+    pr.gold = 90;
+    pr.rhodium = 30;
+    pr.platinum = 60;
     model = Predator;
 }
 

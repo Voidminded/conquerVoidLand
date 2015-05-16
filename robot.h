@@ -40,6 +40,7 @@ private:
     Property(int, HitPoint, hp);
     Property(int, Power, power);
     PropertyGet(int, Model, model);
+    PropertyGet(int, MultiTargetGun, multiTarget);
     PropertyGet(price, Price, pr);
     PropertyGet(float, XOffset, xOffset);
     PropertyGet(float, YOffset, yOffset);

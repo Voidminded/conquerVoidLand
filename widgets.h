@@ -80,5 +80,19 @@ public:
     QPushButton *playPB;
 };
 
+class CInfoWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    CInfoWidget(QWidget* parent = 0);
+    ~CInfoWidget();
+private:
+    QLabel *gLab[4], *pLab[4], *rLab[4], *eR[4], *pR[4], *tR[4], *nR[4];
+    QLabel *gLabL[4], *pLabL[4], *rLabL[4], *eRL[4], *pRL[4], *tRL[4], *nRL[4];
+    QTimer *updateTimer;
+private slots:
+    void updateSlot();
+};
+
 
 #endif // WIDGETS_H

@@ -3,6 +3,11 @@
 CTerminatorRobot::CTerminatorRobot()
 {
     hp = 210;
+    multiTarget = true;
+    power = 30;
+    pr.gold = 40;
+    pr.platinum = 20;
+    pr.rhodium = 3;
     model = Terminator;
 }
 

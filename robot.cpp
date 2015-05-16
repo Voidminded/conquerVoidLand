@@ -12,6 +12,7 @@ CRobot::CRobot(QObject *parent) : QObject(parent)
     pr.gold = 0;
     pr.rhodium = 0;
     pr.platinum = 0;
+    multiTarget = false;
     shiftTimer = new QTimer();
     shiftTimer->setInterval(_RATE);
     shiftTimer->start();

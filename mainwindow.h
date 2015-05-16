@@ -25,6 +25,7 @@ public:
     CLoadPlayersWidget *loadWidget;
     CLoadMapWidget *mapWidget;
     CGameWidget *gameWidget;
+    CInfoWidget *info;
     QTimer* statusUpdateTimer;
     CGame* game;
 };

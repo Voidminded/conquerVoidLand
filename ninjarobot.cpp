@@ -2,7 +2,10 @@
 
 CNinjaRobot::CNinjaRobot()
 {
-    hp = 120;
+    hp = 180;
+    power = 300;
+    pr.platinum = 10;
+    pr.gold = 30;
     model = Ninja;
 }
 

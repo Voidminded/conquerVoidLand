@@ -238,3 +238,146 @@ CGameWidget::~CGameWidget()
 {
 
 }
+
+// -------------- Info Widget ---------------
+
+CInfoWidget::CInfoWidget( QWidget* parent)
+{
+    QGridLayout *lOut = new QGridLayout(this);
+    this->setLayout(lOut);
+    for(int i = 0; i < 4; i++)
+    {
+        rLabL[i] = new QLabel("Rhodium : ");
+        gLabL[i] = new QLabel("Gold : ");
+        pLabL[i] = new QLabel("Platinum : ");
+        rLab[i] = new QLabel("0");
+        gLab[i] = new QLabel("0");
+        pLab[i] = new QLabel("0");
+        eRL[i] = new QLabel("Explorers : ");
+        eR[i] = new QLabel("0");
+        pRL[i] = new QLabel("Predators : ");
+        pR[i] = new QLabel("0");
+        tRL[i] = new QLabel("Terminators : ");
+        tR[i] = new QLabel("0");
+        nRL[i] = new QLabel("Ninjas : ");
+        nR[i] = new QLabel("0");
+    }
+    rLabL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    gLabL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    pLabL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    rLab[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    gLab[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    pLab[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    eRL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    eR[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    pRL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    pR[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    tRL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    tR[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    nRL[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+    nR[Cyan]->setStyleSheet("QLabel {color : darkcyan}");
+
+    rLabL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    gLabL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    pLabL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    rLab[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    gLab[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    pLab[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    eRL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    eR[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    pRL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    pR[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    tRL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    tR[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    nRL[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+    nR[Magenta]->setStyleSheet("QLabel {color : darkmagenta}");
+
+    rLabL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    gLabL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    pLabL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    rLab[Yellow]->setStyleSheet("QLabel {color : orange}");
+    gLab[Yellow]->setStyleSheet("QLabel {color : orange}");
+    pLab[Yellow]->setStyleSheet("QLabel {color : orange}");
+    eRL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    eR[Yellow]->setStyleSheet("QLabel {color : orange}");
+    pRL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    pR[Yellow]->setStyleSheet("QLabel {color : orange}");
+    tRL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    tR[Yellow]->setStyleSheet("QLabel {color : orange}");
+    nRL[Yellow]->setStyleSheet("QLabel {color : orange}");
+    nR[Yellow]->setStyleSheet("QLabel {color : orange}");
+
+    rLabL[Red]->setStyleSheet(" QLabel {color : red}");
+    gLabL[Red]->setStyleSheet(" QLabel {color : red}");
+    pLabL[Red]->setStyleSheet(" QLabel {color : red}");
+    rLab[Red]->setStyleSheet(" QLabel {color : red}");
+    gLab[Red]->setStyleSheet(" QLabel {color : red}");
+    pLab[Red]->setStyleSheet(" QLabel {color : red}");
+    eRL[Red]->setStyleSheet(" QLabel {color : red}");
+    eR[Red]->setStyleSheet(" QLabel {color : red}");
+    pRL[Red]->setStyleSheet(" QLabel {color : red}");
+    pR[Red]->setStyleSheet(" QLabel {color : red}");
+    tRL[Red]->setStyleSheet(" QLabel {color : red}");
+    tR[Red]->setStyleSheet(" QLabel {color : red}");
+    nRL[Red]->setStyleSheet(" QLabel {color : red}");
+    nR[Red]->setStyleSheet(" QLabel {color : red}");
+
+    for(int i = 0; i < 2; i++)
+    {
+        lOut->addWidget(rLabL[i],0,i*2);
+        lOut->addWidget(rLab[i],0,(i*2)+1);
+        lOut->addWidget(pLabL[i],1,i*2);
+        lOut->addWidget(pLab[i],1,(i*2)+1);
+        lOut->addWidget(gLabL[i],2,i*2);
+        lOut->addWidget(gLab[i],2,(i*2)+1);
+        lOut->addWidget(eRL[i],3,i*2);
+        lOut->addWidget(eR[i],3,(i*2)+1);
+        lOut->addWidget(nRL[i],4,i*2);
+        lOut->addWidget(nR[i],4,(i*2)+1);
+        lOut->addWidget(tRL[i],5,i*2);
+        lOut->addWidget(tR[i],5,(i*2)+1);
+        lOut->addWidget(pRL[i],6,i*2);
+        lOut->addWidget(pR[i],6,(i*2)+1);
+    }
+
+    for(int i = 0; i < 2; i++)
+    {
+        lOut->addWidget(rLabL[i+2],7,i*2);
+        lOut->addWidget(rLab[i+2],7,(i*2)+1);
+        lOut->addWidget(pLabL[i+2],8,i*2);
+        lOut->addWidget(pLab[i+2],8,(i*2)+1);
+        lOut->addWidget(gLabL[i+2],9,i*2);
+        lOut->addWidget(gLab[i+2],9,(i*2)+1);
+        lOut->addWidget(eRL[i+2],10,i*2);
+        lOut->addWidget(eR[i+2],10,(i*2)+1);
+        lOut->addWidget(nRL[i+2],11,i*2);
+        lOut->addWidget(nR[i+2],11,(i*2)+1);
+        lOut->addWidget(tRL[i+2],12,i*2);
+        lOut->addWidget(tR[i+2],12,(i*2)+1);
+        lOut->addWidget(pRL[i+2],13,i*2);
+        lOut->addWidget(pR[i+2],13,(i*2)+1);
+    }
+    updateTimer = new QTimer();
+    updateTimer->setInterval(_RATE);
+    updateTimer->start();
+    connect(updateTimer,SIGNAL(timeout()),this,SLOT(updateSlot()));
+}
+
+CInfoWidget::~CInfoWidget()
+{
+
+}
+
+void CInfoWidget::updateSlot()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        rLab[i]->setText(QString::number(knowledge->teams[i].rhodium));
+        gLab[i]->setText(QString::number(knowledge->teams[i].gold));
+        pLab[i]->setText(QString::number(knowledge->teams[i].platinum));
+        eR[i]->setText(QString::number(knowledge->teams[i].explorers.count()));
+        pR[i]->setText(QString::number(knowledge->teams[i].predators.count()));
+        tR[i]->setText(QString::number(knowledge->teams[i].terminators.count()));
+        nR[i]->setText(QString::number(knowledge->teams[i].ninjas.count()));
+    }
+}

@@ -1035,6 +1035,21 @@ void CGame::initiateGame()
 
 void CGame::playing()
 {
+    //Distribution :
+    for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it != knowledge->map->cells.end(); ++it)
+    {
+        if(it->owner != -1 && it->value > 0)
+        {
+            if(it->mineType == Gold)
+                knowledge->teams[it->owner].gold += it->value;
+            else if(it->mineType == Platinum)
+                knowledge->teams[it->owner].platinum += it->value;
+            else if(it->mineType == Rhodium)
+                knowledge->teams[it->owner].rhodium += it->value;
+        }
+    }
+
+    //Moving and Buying :
     if(knowledge->teams[0].active)
     {
         sendPlayer1();
@@ -1071,5 +1086,6 @@ void CGame::playing()
             p4->close();
         }
     }
+    //Fighting :
 
 }
