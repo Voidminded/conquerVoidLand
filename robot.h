@@ -22,6 +22,7 @@ public:
     explicit CRobot(QObject *parent = 0);
 //    CRobot(const CRobot &obj);
     ~CRobot();
+    inline void damage(int _hp){hp-=_hp;}
 protected:
     int rot;
     float ocu;
@@ -30,7 +31,6 @@ protected:
 //    virtual void loadGraphics(){}
 //    virtual QPixmap draw(){}
     virtual int hit(){return 0;}
-    inline void damage(int _hp){hp-=_hp;}
 private:
     float xAdder;
     float yAdder;

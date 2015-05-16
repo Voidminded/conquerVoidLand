@@ -53,21 +53,6 @@ void CGame::compileCode()
 
 }
 
-void CGame::read()
-{
-    //    qDebug() << "reading !" ;
-    //    knowledge->debug(p1->readAllStandardError(),Qt::red);
-    //    knowledge->debug(p1->readAllStandardOutput(),Qt::green);
-}
-
-void CGame::write()
-{
-    static int a=0;
-    qDebug() << "writing";
-    //    if(p1->state() == QProcess::Running)
-    //        p1->write(QString("%1\n").arg(a++).toStdString().c_str());
-}
-
 void CGame::compilePlayer1()
 {
     knowledge->debug("Compiling Player 1 .........",Qt::darkMagenta);
@@ -530,141 +515,141 @@ void CGame::moveRobot(int id, int numbers, char model, int from, int to)
                                 knowledge->teams[id].explorers.at(j)->setDirection(1);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(1);
-                        else
                             knowledge->teams[id].explorers.at(j)->setDirection(2);
+                        else
+                            knowledge->teams[id].explorers.at(j)->setDirection(1);
                     }
                 }
     if(model == 'T')
         for(int i = 0; i < numbers; i++)
-            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
-                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+            for(int j = 0; j < knowledge->teams[id].terminators.count(); j++)
+                if(knowledge->teams[id].terminators.at(j)->getPosition() == from)
                 {
-                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->teams[id].terminators.at(j)->setPosition(to);
                     knowledge->map->cells[from].robots[id][Terminator]--;
                     knowledge->map->cells[to].robots[id][Terminator]++;
                     if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                            knowledge->teams[id].terminators.at(j)->setDirection(0);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                            knowledge->teams[id].terminators.at(j)->setDirection(3);
                     }
                     else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                                knowledge->teams[id].terminators.at(j)->setDirection(4);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                                knowledge->teams[id].terminators.at(j)->setDirection(5);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            knowledge->teams[id].terminators.at(j)->setDirection(4);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                            knowledge->teams[id].terminators.at(j)->setDirection(5);
                     }
                     else
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                                knowledge->teams[id].terminators.at(j)->setDirection(2);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                                knowledge->teams[id].terminators.at(j)->setDirection(1);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                            knowledge->teams[id].terminators.at(j)->setDirection(2);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            knowledge->teams[id].terminators.at(j)->setDirection(1);
                     }
                 }
     if(model == 'N')
         for(int i = 0; i < numbers; i++)
-            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
-                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+            for(int j = 0; j < knowledge->teams[id].ninjas.count(); j++)
+                if(knowledge->teams[id].ninjas.at(j)->getPosition() == from)
                 {
-                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->teams[id].ninjas.at(j)->setPosition(to);
                     knowledge->map->cells[from].robots[id][Ninja]--;
                     knowledge->map->cells[to].robots[id][Ninja]++;
                     if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(0);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(3);
                     }
                     else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                                knowledge->teams[id].ninjas.at(j)->setDirection(4);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                                knowledge->teams[id].ninjas.at(j)->setDirection(5);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(4);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(5);
                     }
                     else
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                                knowledge->teams[id].ninjas.at(j)->setDirection(2);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                                knowledge->teams[id].ninjas.at(j)->setDirection(1);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(2);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            knowledge->teams[id].ninjas.at(j)->setDirection(1);
                     }
                 }
     if(model == 'P')
         for(int i = 0; i < numbers; i++)
-            for(int j = 0; j < knowledge->teams[id].explorers.count(); j++)
-                if(knowledge->teams[id].explorers.at(j)->getPosition() == from)
+            for(int j = 0; j < knowledge->teams[id].predators.count(); j++)
+                if(knowledge->teams[id].predators.at(j)->getPosition() == from)
                 {
-                    knowledge->teams[id].explorers.at(j)->setPosition(to);
+                    knowledge->teams[id].predators.at(j)->setPosition(to);
                     knowledge->map->cells[from].robots[id][Predator]--;
                     knowledge->map->cells[to].robots[id][Predator]++;
                     if(knowledge->map->reversePos[from].first == knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(0);
+                            knowledge->teams[id].predators.at(j)->setDirection(0);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(3);
+                            knowledge->teams[id].predators.at(j)->setDirection(3);
                     }
                     else if(knowledge->map->reversePos[from].first < knowledge->map->reversePos[to].first)
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(4);
+                                knowledge->teams[id].predators.at(j)->setDirection(4);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(5);
+                                knowledge->teams[id].predators.at(j)->setDirection(5);
                         }
                         else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(4);
+                            knowledge->teams[id].predators.at(j)->setDirection(4);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(5);
+                            knowledge->teams[id].predators.at(j)->setDirection(5);
                     }
                     else
                     {
                         if(knowledge->map->reversePos[from].second == knowledge->map->reversePos[to].second)
                         {
                             if(from%2)
-                                knowledge->teams[id].explorers.at(j)->setDirection(2);
+                                knowledge->teams[id].predators.at(j)->setDirection(2);
                             else
-                                knowledge->teams[id].explorers.at(j)->setDirection(1);
+                                knowledge->teams[id].predators.at(j)->setDirection(1);
                         }
-                        else if(knowledge->map->reversePos[from].second > knowledge->map->reversePos[to].second)
-                            knowledge->teams[id].explorers.at(j)->setDirection(1);
+                        else if(knowledge->map->reversePos[from].second < knowledge->map->reversePos[to].second)
+                            knowledge->teams[id].predators.at(j)->setDirection(2);
                         else
-                            knowledge->teams[id].explorers.at(j)->setDirection(2);
+                            knowledge->teams[id].predators.at(j)->setDirection(1);
                     }
                 }
 
@@ -672,6 +657,9 @@ void CGame::moveRobot(int id, int numbers, char model, int from, int to)
 
 void CGame::receivePlayer1()
 {
+    QProcess * sourceProcess = dynamic_cast<QProcess *>(sender());
+    if(sourceProcess != p1)
+        return;
     int id = 0;
     QString errors = p1->readAllStandardError();
     if(!errors.isEmpty())
@@ -751,6 +739,9 @@ void CGame::receivePlayer1()
 
 void CGame::receivePlayer2()
 {
+    QProcess * sourceProcess = dynamic_cast<QProcess *>(sender());
+    if(sourceProcess != p2)
+        return;
     int id = 1;
     QString errors = p2->readAllStandardError();
     if(!errors.isEmpty())
@@ -830,6 +821,9 @@ void CGame::receivePlayer2()
 
 void CGame::receivePlayer3()
 {
+    QProcess * sourceProcess = dynamic_cast<QProcess *>(sender());
+    if(sourceProcess != p3)
+        return;
     int id = 2;
     QString errors = p3->readAllStandardError();
     if(!errors.isEmpty())
@@ -903,12 +897,15 @@ void CGame::receivePlayer3()
     purchase.prepend("Player 3 purchases : ");
     knowledge->debug(movment,Qt::darkYellow);
     knowledge->debug(purchase,Qt::yellow);
-//    if(!rest.isEmpty())
-//        knowledge->debug(rest);
+    if(!rest.isEmpty())
+        knowledge->debug(rest);
 }
 
 void CGame::receivePlayer4()
 {
+    QProcess * sourceProcess = dynamic_cast<QProcess *>(sender());
+    if(sourceProcess != p4)
+        return;
     int id = 3;
     QString errors = p4->readAllStandardError();
     if(!errors.isEmpty())
@@ -982,8 +979,8 @@ void CGame::receivePlayer4()
     purchase.prepend("Player 4 purchases : ");
     knowledge->debug(movment,Qt::darkCyan);
     knowledge->debug(purchase,Qt::cyan);
-//    if(!rest.isEmpty())
-//        knowledge->debug(rest);
+    if(!rest.isEmpty())
+        knowledge->debug(rest);
 }
 
 void CGame::initiateGame()
@@ -1013,21 +1010,25 @@ void CGame::initiateGame()
     {
         p1->start("./player1.out", QProcess::ReadWrite);
         p1->waitForStarted();
+        delay(30);
     }
     if(knowledge->teams[1].active)
     {
         p2->start("./player2.out", QProcess::ReadWrite);
         p2->waitForStarted();
+        delay(30);
     }
     if(knowledge->teams[2].active)
     {
         p3->start("./player3.out", QProcess::ReadWrite);
         p3->waitForStarted();
+        delay(30);
     }
     if(knowledge->teams[3].active)
     {
         p4->start("./player4.out", QProcess::ReadWrite);
         p4->waitForStarted();
+        delay(30);
     }
 
     playTimer->start();
@@ -1087,6 +1088,7 @@ void CGame::playing()
         }
     }
     //Fighting :
+    fight();
 
     //Ownership update:
     updateOwnership();
@@ -1099,13 +1101,13 @@ void CGame::updateOwnership()
     {
         knowledge->teams[i].protectedCells.clear();
         for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
-            knowledge->teams[i].protectedCells.append(knowledge->teams[i].explorers.at(i)->getPosition());
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].explorers.at(j)->getPosition());
         for(int j = 0; j < knowledge->teams[i].ninjas.count(); j++)
-            knowledge->teams[i].protectedCells.append(knowledge->teams[i].ninjas.at(i)->getPosition());
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].ninjas.at(j)->getPosition());
         for(int j = 0; j < knowledge->teams[i].terminators.count(); j++)
-            knowledge->teams[i].protectedCells.append(knowledge->teams[i].terminators.at(i)->getPosition());
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].terminators.at(j)->getPosition());
         for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
-            knowledge->teams[i].protectedCells.append(knowledge->teams[i].predators.at(i)->getPosition());
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].predators.at(j)->getPosition());
 //        for(int j = 0; j < knowledge->teams[i].protectedCells.count(); j++)
 //            knowledge->debug(QString::number(knowledge->teams[i].protectedCells.at(j)));
     }
@@ -1120,5 +1122,237 @@ void CGame::updateOwnership()
             }
             knowledge->map->cells[knowledge->teams[i].protectedCells.at(j)].owner = i;
         }
+    }
+}
+
+void CGame::fight()
+{
+    for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it!= knowledge->map->cells.end(); ++it)
+    {
+        for(int i = 0;  i < 4; i++)
+        {
+            destroyRobs(it.key(), i);
+        }
+    }
+    //Destroying the robots :
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
+            if(knowledge->teams[i].explorers.at(j)->getHitPoint() <= 0)
+            {
+                CExplorerRobot *bot = knowledge->teams[i].explorers[j];
+                knowledge->teams[i].explorers.removeAt(j);
+                j--;
+                delete bot;
+            }
+        for(int j = 0; j < knowledge->teams[i].ninjas.count(); j++)
+            if(knowledge->teams[i].ninjas.at(j)->getHitPoint() <= 0)
+            {
+                CNinjaRobot *bot = knowledge->teams[i].ninjas[j];
+                knowledge->teams[i].ninjas.removeAt(j);
+                j--;
+                delete bot;
+            }
+        for(int j = 0; j < knowledge->teams[i].terminators.count(); j++)
+            if(knowledge->teams[i].terminators.at(j)->getHitPoint() <= 0)
+            {
+                CTerminatorRobot *bot = knowledge->teams[i].terminators[j];
+                knowledge->teams[i].terminators.removeAt(j);
+                j--;
+                delete bot;
+            }
+        for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
+            if(knowledge->teams[i].predators.at(j)->getHitPoint() <= 0)
+            {
+                CPredatorRobot *bot = knowledge->teams[i].predators[j];
+                knowledge->teams[i].predators.removeAt(j);
+                j--;
+                delete bot;
+            }
+    }
+}
+
+void CGame::destroyRobs(int pos, int id)
+{
+//    for(int i = 0; i < 4; i++)
+    int i = id;
+    {
+        for(int j = 0; j < knowledge->teams[id].terminators.count(); j++)
+        {
+            if(knowledge->teams[i].terminators.at(j)->getPosition() == pos)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    if( k != id)
+                    {
+                        for(int l = 0; l < knowledge->teams[k].predators.count(); l++)
+                        {
+                            if(knowledge->teams[k].predators.at(l)->getPosition() == pos && knowledge->teams[k].predators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].predators.at(l)->damage(knowledge->teams[i].terminators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].terminators.count(); l++)
+                        {
+                            if(knowledge->teams[k].terminators.at(l)->getPosition() == pos && knowledge->teams[k].terminators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].terminators.at(l)->damage(knowledge->teams[i].terminators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].ninjas.count(); l++)
+                        {
+                            if(knowledge->teams[k].ninjas.at(l)->getPosition() == pos && knowledge->teams[k].ninjas.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].ninjas.at(l)->damage(knowledge->teams[i].terminators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].explorers.count(); l++)
+                        {
+                            if(knowledge->teams[k].explorers.at(l)->getPosition() == pos && knowledge->teams[k].explorers.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].explorers.at(l)->damage(knowledge->teams[i].terminators.at(j)->hit());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
+        {
+            if(knowledge->teams[i].predators.at(j)->getPosition() == pos)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    if( k != id)
+                    {
+                        for(int l = 0; l < knowledge->teams[k].predators.count(); l++)
+                        {
+                            if(knowledge->teams[k].predators.at(l)->getPosition() == pos && knowledge->teams[k].predators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].predators.at(l)->damage(knowledge->teams[i].predators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].terminators.count(); l++)
+                        {
+                            if(knowledge->teams[k].terminators.at(l)->getPosition() == pos && knowledge->teams[k].terminators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].terminators.at(l)->damage(knowledge->teams[i].predators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].ninjas.count(); l++)
+                        {
+                            if(knowledge->teams[k].ninjas.at(l)->getPosition() == pos && knowledge->teams[k].ninjas.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].ninjas.at(l)->damage(knowledge->teams[i].predators.at(j)->hit());
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].explorers.count(); l++)
+                        {
+                            if(knowledge->teams[k].explorers.at(l)->getPosition() == pos && knowledge->teams[k].explorers.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].explorers.at(l)->damage(knowledge->teams[i].predators.at(j)->hit());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int j = 0; j < knowledge->teams[i].ninjas.count(); j++)
+        {
+            if(knowledge->teams[i].ninjas.at(j)->getPosition() == pos)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    if( k != id)
+                    {
+                        for(int l = 0; l < knowledge->teams[k].predators.count(); l++)
+                        {
+                            if(knowledge->teams[k].predators.at(l)->getPosition() == pos && knowledge->teams[k].predators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].predators.at(l)->damage(knowledge->teams[i].ninjas.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].terminators.count(); l++)
+                        {
+                            if(knowledge->teams[k].terminators.at(l)->getPosition() == pos && knowledge->teams[k].terminators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].terminators.at(l)->damage(knowledge->teams[i].ninjas.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].ninjas.count(); l++)
+                        {
+                            if(knowledge->teams[k].ninjas.at(l)->getPosition() == pos && knowledge->teams[k].ninjas.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].ninjas.at(l)->damage(knowledge->teams[i].ninjas.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].explorers.count(); l++)
+                        {
+                            if(knowledge->teams[k].explorers.at(l)->getPosition() == pos && knowledge->teams[k].explorers.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].explorers.at(l)->damage(knowledge->teams[i].ninjas.at(j)->hit());
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
+        {
+            if(knowledge->teams[i].explorers.at(j)->getPosition() == pos)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    if( k != id)
+                    {
+                        for(int l = 0; l < knowledge->teams[k].predators.count(); l++)
+                        {
+                            if(knowledge->teams[k].predators.at(l)->getPosition() == pos && knowledge->teams[k].predators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].predators.at(l)->damage(knowledge->teams[i].explorers.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].terminators.count(); l++)
+                        {
+                            if(knowledge->teams[k].terminators.at(l)->getPosition() == pos && knowledge->teams[k].terminators.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].terminators.at(l)->damage(knowledge->teams[i].explorers.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].ninjas.count(); l++)
+                        {
+                            if(knowledge->teams[k].ninjas.at(l)->getPosition() == pos && knowledge->teams[k].ninjas.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].ninjas.at(l)->damage(knowledge->teams[i].explorers.at(j)->hit());
+                                return;
+                            }
+                        }
+                        for(int l = 0; l < knowledge->teams[k].explorers.count(); l++)
+                        {
+                            if(knowledge->teams[k].explorers.at(l)->getPosition() == pos && knowledge->teams[k].explorers.at(l)->getHitPoint() > 0)
+                            {
+                                knowledge->teams[k].explorers.at(l)->damage(knowledge->teams[i].explorers.at(j)->hit());
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void CGame::delay( int millisecondsToWait )
+{
+    QTime dieTime = QTime::currentTime().addMSecs( millisecondsToWait );
+    while( QTime::currentTime() < dieTime )
+    {
+        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
 }

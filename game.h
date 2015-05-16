@@ -9,6 +9,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <QTime>
+#include <QCoreApplication>
+#include <QEventLoop>
 
 class CGame : public QObject
 {
@@ -29,10 +32,11 @@ private:
     void sendPlayer2();
     void sendPlayer3();
     void sendPlayer4();
+    void fight();
+    void destroyRobs(int pos, int id);
     void updateOwnership();
+    void delay( int millisecondsToWait );
 private slots:
-    void read();
-    void write();
     void receivePlayer1();
     void receivePlayer2();
     void receivePlayer3();
