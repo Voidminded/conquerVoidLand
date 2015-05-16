@@ -17,10 +17,11 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     mainTimer->setInterval(30);
     mainTimer->start();
     connect(mainTimer,SIGNAL(timeout()),this,SLOT(update()));
-    cell = QPixmap("./images/hex/empty");
+    cellIMG = QPixmap("./images/hex/empty");
+    hud = QPixmap("./images/hud");
 
     //    this->setDisabl;
-    zoomFactor = std::max((this->width()*1.0/cell.width())/knowledge->map->getWidth(), (this->height()*1.0/cell.height())/knowledge->map->getHeight());
+    zoomFactor = std::max((this->width()*1.0/cellIMG.width())/knowledge->map->getWidth(), (this->height()*1.0/cellIMG.height())/knowledge->map->getHeight());
     qDebug() << zoomFactor;
     screenPosX = screenPosY = 0;
     dragging = false;
@@ -310,7 +311,6 @@ void CMonitorWidget::paintEvent(QPaintEvent */*event*/)
         painter.scale(0.6,0.6);
         painter.setOpacity(0.3);
         painter.drawPixmap(0,0,QPixmap("./images/planet.jpg"));
-//        mapGenerator(&painter);
         return;
     }
     painter.drawPixmap(0,0,QPixmap("./images/background.jpg"));
@@ -321,14 +321,35 @@ void CMonitorWidget::paintEvent(QPaintEvent */*event*/)
     painter.setFont(f);
     drawMap(&painter);
     drawScene(&painter);
+    painter.resetTransform();
+    painter.drawPixmap(0,0,hud.scaled(this->width(),this->height()));
+    for(int i = 0; i < 4; i++)
+        if(knowledge->teams[i].active)
+        {
+            int num = 0;
+            for(QMap<int, cell>::iterator it = knowledge->map->cells.begin(); it!=knowledge->map->cells.end();++it)
+                num+=(it->owner == i);
+            QString s;
+            s = QString("Player %1").arg(i+1);
+            QFont f;
+            f.setPointSize(18);
+            painter.setFont(f);
+            if(i == Red)
+                painter.setPen(Qt::red);
+            else if(i == Magenta)
+                painter.setPen(Qt::magenta);
+            else if(i == Cyan)
+                painter.setPen(Qt::cyan);
+            else if(i == Yellow)
+                painter.setPen(Qt::yellow);
+            painter.drawText(this->width()-120,(i*80)+90,s);
+            painter.drawText(this->width()-90,(i*80)+130,QString::number(num));
+        }
 }
 
 void CMonitorWidget::drawScene(QPainter *painter)
 {
-    //    painter->translate(p.getXOffset(), p.getYOffset());
     painter->setRenderHint(QPainter::Antialiasing);
-//    int height = cell.height()-8;
-//    int width = cell.width()-8;
     for(int i = 0; i < 4; i++)
     {
         for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
@@ -339,17 +360,7 @@ void CMonitorWidget::drawScene(QPainter *painter)
             drawRobot(painter, i, j, Terminator);
         for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
             drawRobot(painter, i, j, Predator);
-        //            painter->drawPixmap(
-        //                     knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].first*(width-100)+60
-        //                    ,(knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].first%2?1:-1)*height/4+knowledge->map->reversePos[knowledge->teams[i].explorers.at(j)->getPosition()].second*height+60
-        //                    ,knowledge->teams[i].explorers.at(j)->pics[knowledge->teams[i].color][knowledge->teams[i].explorers.at(j)->getDirection()]);
     }
-    //    for(int i = 0; i < 24; i++)
-    //        for(int j = 0; j < 16; j++)
-    //            //            if(knowledge->map->getMap()[i][j])
-    //            painter->drawPixmap(i*(width-100)+60,(i%2?1:-1)*height/4+j*height+60,bb[(i*8+j)%96]);
-    //                painter->drawPixmap(i*(cell.width()-100),(i%2?1:-1)*cell.height()/4+j*cell.height(),bb[(i*8+j)%96]);
-    //    painter->drawPixmap(0,0,drawBot2(3,3));
 }
 
 void CMonitorWidget::wheelEvent(QWheelEvent * event)
@@ -386,8 +397,8 @@ void CMonitorWidget::mouseReleaseEvent(QMouseEvent /*event*/)
 
 void CMonitorWidget::drawMap(QPainter *painter)
 {
-    int height = cell.height()-8;
-    int width = cell.width()-8;
+    int height = cellIMG.height()-8;
+    int width = cellIMG.width()-8;
     for(int i = 0; i < knowledge->map->getWidth(); i++)
         for(int j = 0; j < knowledge->map->getHeight(); j++)
         {
@@ -469,8 +480,8 @@ void CMonitorWidget::testfunction()
 
 void CMonitorWidget::drawRobot(QPainter *painter, int team, int robot, int model)
 {
-    int height = cell.height()-8;
-    int width = cell.width()-8;
+    int height = cellIMG.height()-8;
+    int width = cellIMG.width()-8;
     if(model == Explorer)
     {
 //        qDebug() << knowledge->teams[team].explorers.at(robot)->getXOffset() << knowledge->teams[team].explorers.at(robot)->getYOffset();
@@ -515,7 +526,7 @@ void CMonitorWidget::drawRobot(QPainter *painter, int team, int robot, int model
 
 void CMonitorWidget::updateSize()
 {
-    zoomFactor = std::max((this->width()*1.0/cell.width())/knowledge->map->getWidth(), (this->height()*1.0/cell.height())/knowledge->map->getHeight());
+    zoomFactor = std::max((this->width()*1.0/cellIMG.width())/knowledge->map->getWidth(), (this->height()*1.0/cellIMG.height())/knowledge->map->getHeight());
     qDebug() << zoomFactor;
     screenPosX = screenPosY = 0;
 }

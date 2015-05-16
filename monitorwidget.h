@@ -32,7 +32,8 @@ private:
     bool dragging;
     QPixmap zirs;
     QPixmap cellOwner[4];
-    QPixmap cell;
+    QPixmap cellIMG;
+    QPixmap hud;
     QPixmap cellMine[4][7];
     QMap<int, QPixmap> robot1;
     QMap<int, QPixmap> color1;

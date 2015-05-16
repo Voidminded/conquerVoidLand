@@ -7,12 +7,12 @@
 #include "statuswidget.h"
 #include <QObject>
 
-//union Robots{
-//    CExplorerRobot e();
-//    CTerminatorRobot t();
-//    CNinjaRobot n();
-//    CPredatorRobot p();
-//};
+union Robots{
+    CExplorerRobot *e;
+    CTerminatorRobot *t;
+    CNinjaRobot *n;
+    CPredatorRobot *p;
+};
 
 class team
 {
@@ -42,7 +42,7 @@ public:
     bool canGo(int id, int num, int model, int from, int to, QString &error);
     QMap< int, price> robotsPrice;
     CMap *map;
-//    QList<Robots> robots;
+    QList<Robots> robots;
     team teams[4];
     Property(int, ActiveTeams, activeTeams);
     PropertyGet(QPixmap***, RobotsPics, robotsPics);//Usage [Team][Robot][Direction]

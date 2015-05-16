@@ -22,8 +22,6 @@ CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(pare
 
     printer = _printer;
 
-//    for(int i = 0; i < map->activeCells.count(); i++)
-//        debug(QString("Active : %1 %2").arg(map->activeCells.at(i).first).arg(map->activeCells.at(i).second), Qt::magenta);
     //Generating robots images :
     robotsPics = new QPixmap**[4];
     for(int i = 0; i < 4; i++)
