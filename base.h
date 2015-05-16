@@ -6,7 +6,7 @@
 
 //Refresh Rate :
 #define _RATE   30
-#define _COMMAND_INTERVAL 1000
+#define _COMMAND_INTERVAL 3000
 #define _PLAYER_RESPONSE_TIME 100
 
 enum RobotColor{

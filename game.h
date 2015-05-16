@@ -29,6 +29,7 @@ private:
     void sendPlayer2();
     void sendPlayer3();
     void sendPlayer4();
+    void updateOwnership();
 private slots:
     void read();
     void write();

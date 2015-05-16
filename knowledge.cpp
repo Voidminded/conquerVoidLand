@@ -16,6 +16,7 @@ CKnowledge::CKnowledge(CStatusPrinter *_printer, QObject *parent) : QObject(pare
         teams[i].predators.clear();
         teams[i].rhodium = 0;
         teams[i].terminators.clear();
+        teams[i].protectedCells.clear();
     }
     map = new CMap(9,27, 9,27,300);
 

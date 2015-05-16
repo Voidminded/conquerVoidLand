@@ -679,36 +679,6 @@ void CGame::receivePlayer1()
     QString movment = p1->readLine();
     QString purchase = p1->readLine();
     QString rest = p1->readAllStandardOutput();
-    if(purchase != "WAIT")
-    {
-        std::stringstream stream;
-        stream << purchase.toStdString();
-        char model;
-        while(stream >> model)
-        {
-            int number, pos, m;
-            if( model == 'T')
-                m = Terminator;
-            else if( model == 'N')
-                m = Ninja;
-            else if( model == 'E')
-                m = Explorer;
-            else if(model == 'P')
-                m = Predator;
-            else
-                m = -1;
-            stream >> number;
-            stream >> pos;
-            QString buyErr;
-            if(knowledge->canBuy(id, number,m, pos, buyErr))
-                addRobot(id, number, model, pos);
-            else
-            {
-                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
-                knowledge->debug(buyErr, Qt::blue);
-            }
-        }
-    }
     if(movment != "WAIT")
     {
         std::stringstream stream;
@@ -738,6 +708,36 @@ void CGame::receivePlayer1()
             {
                 mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
                 knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
             }
         }
     }
@@ -758,36 +758,6 @@ void CGame::receivePlayer2()
     QString movment = p2->readLine();
     QString purchase = p2->readLine();
     QString rest = p2->readAllStandardOutput();
-    if(purchase != "WAIT")
-    {
-        std::stringstream stream;
-        stream << purchase.toStdString();
-        char model;
-        while(stream >> model)
-        {
-            int number, pos, m;
-            if( model == 'T')
-                m = Terminator;
-            else if( model == 'N')
-                m = Ninja;
-            else if( model == 'E')
-                m = Explorer;
-            else if(model == 'P')
-                m = Predator;
-            else
-                m = -1;
-            stream >> number;
-            stream >> pos;
-            QString buyErr;
-            if(knowledge->canBuy(id, number,m, pos, buyErr))
-                addRobot(id, number, model, pos);
-            else
-            {
-                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
-                knowledge->debug(buyErr, Qt::blue);
-            }
-        }
-    }
     if(movment != "WAIT")
     {
         std::stringstream stream;
@@ -817,6 +787,36 @@ void CGame::receivePlayer2()
             {
                 mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
                 knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
             }
         }
     }
@@ -837,36 +837,6 @@ void CGame::receivePlayer3()
     QString movment = p3->readLine();
     QString purchase = p3->readLine();
     QString rest = p3->readAllStandardOutput();
-    if(purchase != "WAIT")
-    {
-        std::stringstream stream;
-        stream << purchase.toStdString();
-        char model;
-        while(stream >> model)
-        {
-            int number, pos, m;
-            if( model == 'T')
-                m = Terminator;
-            else if( model == 'N')
-                m = Ninja;
-            else if( model == 'E')
-                m = Explorer;
-            else if(model == 'P')
-                m = Predator;
-            else
-                m = -1;
-            stream >> number;
-            stream >> pos;
-            QString buyErr;
-            if(knowledge->canBuy(id, number,m, pos, buyErr))
-                addRobot(id, number, model, pos);
-            else
-            {
-                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
-                knowledge->debug(buyErr, Qt::blue);
-            }
-        }
-    }
     if(movment != "WAIT")
     {
         std::stringstream stream;
@@ -896,6 +866,36 @@ void CGame::receivePlayer3()
             {
                 mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
                 knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
             }
         }
     }
@@ -916,36 +916,6 @@ void CGame::receivePlayer4()
     QString movment = p4->readLine();
     QString purchase = p4->readLine();
     QString rest = p4->readAllStandardOutput();
-    if(purchase != "WAIT")
-    {
-        std::stringstream stream;
-        stream << purchase.toStdString();
-        char model;
-        while(stream >> model)
-        {
-            int number, pos, m;
-            if( model == 'T')
-                m = Terminator;
-            else if( model == 'N')
-                m = Ninja;
-            else if( model == 'E')
-                m = Explorer;
-            else if(model == 'P')
-                m = Predator;
-            else
-                m = -1;
-            stream >> number;
-            stream >> pos;
-            QString buyErr;
-            if(knowledge->canBuy(id, number,m, pos, buyErr))
-                addRobot(id, number, model, pos);
-            else
-            {
-                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
-                knowledge->debug(buyErr, Qt::blue);
-            }
-        }
-    }
     if(movment != "WAIT")
     {
         std::stringstream stream;
@@ -975,6 +945,36 @@ void CGame::receivePlayer4()
             {
                 mvErr.prepend(QString("Invalid Move %1 of %2 from %3 to %4 : ").arg(number).arg(model).arg(from).arg(to));
                 knowledge->debug(mvErr, Qt::darkBlue);
+            }
+        }
+    }
+    if(purchase != "WAIT")
+    {
+        std::stringstream stream;
+        stream << purchase.toStdString();
+        char model;
+        while(stream >> model)
+        {
+            int number, pos, m;
+            if( model == 'T')
+                m = Terminator;
+            else if( model == 'N')
+                m = Ninja;
+            else if( model == 'E')
+                m = Explorer;
+            else if(model == 'P')
+                m = Predator;
+            else
+                m = -1;
+            stream >> number;
+            stream >> pos;
+            QString buyErr;
+            if(knowledge->canBuy(id, number,m, pos, buyErr))
+                addRobot(id, number, model, pos);
+            else
+            {
+                buyErr.prepend(QString("Invalid purchase Buying %1 of %2 in %3 : ").arg(number).arg(model).arg(pos));
+                knowledge->debug(buyErr, Qt::blue);
             }
         }
     }
@@ -1088,4 +1088,37 @@ void CGame::playing()
     }
     //Fighting :
 
+    //Ownership update:
+    updateOwnership();
+
+}
+
+void CGame::updateOwnership()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        knowledge->teams[i].protectedCells.clear();
+        for(int j = 0; j < knowledge->teams[i].explorers.count(); j++)
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].explorers.at(i)->getPosition());
+        for(int j = 0; j < knowledge->teams[i].ninjas.count(); j++)
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].ninjas.at(i)->getPosition());
+        for(int j = 0; j < knowledge->teams[i].terminators.count(); j++)
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].terminators.at(i)->getPosition());
+        for(int j = 0; j < knowledge->teams[i].predators.count(); j++)
+            knowledge->teams[i].protectedCells.append(knowledge->teams[i].predators.at(i)->getPosition());
+//        for(int j = 0; j < knowledge->teams[i].protectedCells.count(); j++)
+//            knowledge->debug(QString::number(knowledge->teams[i].protectedCells.at(j)));
+    }
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < knowledge->teams[i].protectedCells.count(); j++)
+        {
+            for(int k = 0; k < 4; k++)
+            {
+                if(k != j && knowledge->teams[k].protectedCells.contains(knowledge->teams[i].protectedCells.at(j)))
+                    break;
+            }
+            knowledge->map->cells[knowledge->teams[i].protectedCells.at(j)].owner = i;
+        }
+    }
 }

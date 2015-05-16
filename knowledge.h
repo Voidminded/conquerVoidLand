@@ -26,6 +26,7 @@ public:
     int platinum;
     int gold;
     bool active;
+    QList<int> protectedCells;
 };
 
 class CKnowledge : public QObject
