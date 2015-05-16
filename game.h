@@ -19,13 +19,12 @@ class CGame : public QObject
 public:
     CGame(QObject *parent = 0);
     ~CGame();
-    void compileCode();
 
 private:
     QTimer *p1CTimer, *p2CTimer, *p3CTimer, *p4CTimer;
     QProcess *p1, *p2, *p3, *p4;
     QTimer *playTimer;
-    bool inited1;
+    bool inited1,inited2,inited3,inited4;
     void addRobot( int team, int numbers, char model, int pos);
     void moveRobot(int id, int numbers, char model, int from, int to);
     void sendPlayer1();

@@ -3,8 +3,9 @@
 CGame::CGame(QObject *parent)  : QObject(parent)
 {
     inited1 = false;
-
-    compileCode();
+    inited2 = false;
+    inited3 = false;
+    inited4 = false;
 
     p1 = new QProcess(this);
     p1->setProcessChannelMode(QProcess::SeparateChannels);
@@ -31,25 +32,6 @@ CGame::CGame(QObject *parent)  : QObject(parent)
 
 CGame::~CGame()
 {
-
-}
-
-void CGame::compileCode()
-{
-    //    FILE *fp = popen("g++ test.cpp -o player1.out", "rt");
-    ////    FILE *fp = popen("ls *", "r");
-    //    char buf[102400];
-    ////    buf[0] = 'h';
-    ////    knowledge->debug(QString::fromStdString(buf),Qt::red);
-    //    while (fgets(buf, 1024, fp)) {
-    ////        buf[0] = 'h';
-    //        knowledge->debug(QString::fromStdString(buf),Qt::red);
-    //    }
-
-    //    fclose(fp);
-    //    system("g++ test.cpp -o player1.out");
-
-
 
 }
 
@@ -215,9 +197,9 @@ void CGame::sendPlayer1()
 void CGame::sendPlayer2()
 {
     int id = 1;
-    if(!inited1)
+    if(!inited2)
     {
-        inited1 = true;
+        inited2 = true;
         if(p2->state() == QProcess::Running)
         {
             p2->write(QString("%1 %2 %3 %4\n")
@@ -284,9 +266,9 @@ void CGame::sendPlayer2()
 void CGame::sendPlayer3()
 {
     int id = 2;
-    if(!inited1)
+    if(!inited3)
     {
-        inited1 = true;
+        inited3 = true;
         if(p3->state() == QProcess::Running)
         {
             p3->write(QString("%1 %2 %3 %4\n")
@@ -353,9 +335,9 @@ void CGame::sendPlayer3()
 void CGame::sendPlayer4()
 {
     int id = 3;
-    if(!inited1)
+    if(!inited4)
     {
-        inited1 = true;
+        inited4 = true;
         if(p4->state() == QProcess::Running)
         {
             p4->write(QString("%1 %2 %3 %4\n")
