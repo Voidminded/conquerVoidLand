@@ -102,8 +102,6 @@ CMonitorWidget::CMonitorWidget(QWidget *parent)
     cellMine[Rhodium][5] = QPixmap("./images/hex/rhodium5");
     cellMine[Rhodium][6] = QPixmap("./images/hex/rhodium6");
 
-    generateBots();
-
     for(int i = 0; i < knowledge->map->links.count(); i++)
         knowledge->debug(QString("Link : %1 -> %2").arg(knowledge->map->links.at(i).first).arg(knowledge->map->links.at(i).second), Qt::blue);
 }
@@ -412,26 +410,6 @@ void CMonitorWidget::drawMap(QPainter *painter)
 //                painter->drawText(i*(width-100)+223,(i%2?1:-1)*height/4+j*height+96,QString("%1 %2").arg(i).arg(j));
             }
         }
-}
-
-void CMonitorWidget::generateBots()
-{
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            //            bb[i*6+j] = drawBot1(i,j);
-            bb[i*6+j] = knowledge->getRobotsPics()[i][Explorer][j];
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            //            bb[24+i*6+j] = drawBot2(i,j);
-            bb[24+i*6+j] = knowledge->getRobotsPics()[i][Ninja][j];
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            //            bb[48+i*6+j] = drawBot3(i,j);
-            bb[48+i*6+j] = knowledge->getRobotsPics()[i][Terminator][j];
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 6; j++)
-            //            bb[72+i*6+j] = drawBot4(i,j);
-            bb[72+i*6+j] = knowledge->getRobotsPics()[i][Predator][j];
 }
 
 void CMonitorWidget::testfunction()

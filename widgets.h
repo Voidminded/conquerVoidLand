@@ -15,18 +15,28 @@
 #include <QComboBox>
 #include <QLineEdit>
 
+/**
+ * @brief
+ * Costum widget used to make any widget Docable and add them as new Tab to itself
+ */
 class CTabDockWidget : public QDockWidget
 {
     Q_OBJECT
 public:
+        /**
+         * @brief
+         *
+         * @param parent
+         * @param autoHideAbility = have the auto hide ability or not (as it is still shitty)
+         */
         CTabDockWidget(QWidget* parent , bool autoHideAbility);
         ~CTabDockWidget();
         QTabWidget *tabs;
-        QPushButton *btnAutoHide;
+        QPushButton *btnAutoHide; /**< Auto hide button */
         QWidget* w;
-        QTimer *hideShowTimer;
-        const bool autoHideBool;
-        bool isHide , hideable;
+        QTimer *hideShowTimer; /**< Used for Auto hide */
+        const bool autoHideBool; /**< Used for Auto hide */
+        bool isHide , hideable; /**< Used for Auto hide */
 signals:
         void closeSignal(bool);
 protected:
@@ -36,25 +46,49 @@ protected:
         void setHideable();
 };
 
+/**
+ * @brief
+ * The player's loading widget
+ */
 class CLoadPlayersWidget : public QWidget
 {
     Q_OBJECT
 public:
     CLoadPlayersWidget(QWidget* parent = 0);
     ~CLoadPlayersWidget();
-    QPushButton *compileButt[4];
-    QLabel *activeLabels[4];
+    QPushButton *compileButt[4]; /**< Compiling buttons */
+    QLabel *activeLabels[4]; /**< The label shows if the player is active */
 protected:
     QLabel labels[4];
     QPushButton buttons[4];
-    QCheckBox cBoxes[4];
+    QCheckBox cBoxes[4]; /**< Check boxes */
 public slots:
+    /**
+     * @brief
+     * Loads player code and saves it as a new code (the 4 functions should be merged)
+     */
     void load1();
+    /**
+     * @brief
+     * Loads player code and saves it as a new code (the 4 functions should be merged)
+     */
     void load2();
+    /**
+     * @brief
+     * Loads player code and saves it as a new code (the 4 functions should be merged)
+     */
     void load3();
+    /**
+     * @brief
+     * Loads player code and saves it as a new code (the 4 functions should be merged)
+     */
     void load4();
 };
 
+/**
+ * @brief
+ * The map loading eidget
+ */
 class CLoadMapWidget : public QWidget
 {
     Q_OBJECT
@@ -66,11 +100,29 @@ public:
     QLineEdit *gEdit, *pEdit, *rEdit;
     QPushButton *generateMap;
 private slots:
+    /**
+     * @brief
+     * Update push button slot
+     */
     void pbSlot();
 signals:
+    /**
+     * @brief
+     * This signal will be sent when we want to update the map and carry the information with itself
+     * @param int Row
+     * @param int Column
+     * @param int Rhodium
+     * @param int Platinum
+     * @param int Gold
+     */
     void mapGenerationSignal(int,int,int,int,int);
 };
 
+/**
+ * @brief
+ * Just have a play button for now
+ * Should add pause, Restart, and log the game for play it here
+ */
 class CGameWidget : public QWidget
 {
     Q_OBJECT
@@ -80,6 +132,10 @@ public:
     QPushButton *playPB;
 };
 
+/**
+ * @brief
+ * Information Widget
+ */
 class CInfoWidget : public QWidget
 {
     Q_OBJECT

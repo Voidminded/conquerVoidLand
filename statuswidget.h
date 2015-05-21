@@ -8,6 +8,10 @@
 #include <QGridLayout>
 #include <QQueue>
 
+/**
+ * @brief
+ * A class as a data type for texts used in Status Widget
+ */
 class CStatusText
 {
     public:
@@ -23,12 +27,16 @@ class CStatusText
     int size;
 };
 
+/**
+ * @brief
+ * Just a queue, implemeted as class so that I can add 4 different Queues for each player later (that was the idea)
+ */
 class CStatusPrinter
 {
     public:
     CStatusPrinter() {}
 
-    QQueue<CStatusText> textBuffer;
+    QQueue<CStatusText> textBuffer; /**< TODO */
 };
 
 class CStatusWidget : public QDockWidget
@@ -37,22 +45,36 @@ class CStatusWidget : public QDockWidget
 public:
     CStatusWidget(CStatusPrinter* _statusPrinter);
     ~CStatusWidget();
-    QTextEdit *statusText;
+    QTextEdit *statusText; /**< Text area */
     QLabel *titleLbl;
-    QTextDocument content;
+    QTextDocument content; /**< Text is stored in this document */
 
 public slots:
     void write(QString str, QColor color = QColor("black"));
+    /**
+     * @brief
+     * updates the status bar information
+     */
     void update();
 
 private:
     CStatusPrinter *statusPrinter;
-    QTime logTime;
+    QTime logTime; /**< Time from start of program, is printed before each output in status bar */
 
 signals:
+    /**
+     * @brief
+     * Not used in this version
+     * @param bool
+     */
     void closeSignal(bool);
 
 protected:
+    /**
+     * @brief
+     * emmits the closeSignal
+     * @param
+     */
     void closeEvent(QEvent*);
 };
 
